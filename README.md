@@ -37,7 +37,15 @@ popCNV.py -g genome.fasta -s 1000 -r read_depth/ -b bam_files/ -l gene.list -w w
 
 **-b** bam_file , a folder which contains all bam files and index files or a file contains two columns: sample_name sequence_depth
 
-**Notice: the bam files must be named as sample_name.\*\*\*.bam, the prefix used in mosdepth must be sample_name**
+**Notice: Usage of mosdepth**
+
+```sh
+mkdir read_depth
+cd read_depth
+mosdepth -b 1000 sample_name /path/to/bam/sample_name.bam
+```
+
+**Notice: the bam file must be named start with sample_name and a dot, the prefix used in mosdepth must be sample_name**
 
 **-l** gene.list, a list file contains 4 columns: chromosome_name start_position end_position gene_name
 
