@@ -20,7 +20,8 @@ cd /path/to/install
 git clone https://github.com/sc-zhang/popCNV.git
 cd popCNV/bin
 chmod +x *.py
-export PATH=/path/to/install/popCNV/bin:$PATH >> ~/.bash_profile
+echo 'export PATH=/path/to/install/popCNV/bin:$PATH' >> ~/.bash_profile
+source ~/.bash_profile
 ```
 
 ### Usage
