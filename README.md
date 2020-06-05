@@ -5,7 +5,7 @@
 This software is used for calculating copy number of genes, and get top 5% genes which selected by humans.
 
 ### Citation
-Shengcheng Zhang, Xingtan Zhang* 2020. "PopCNV: briging gaps between CNV and selection." Manuscript preparation
+Zhang Shengcheng, Zhang Xingtan* 2020. "PopCNV: briging gaps between CNV and selection." Manuscript preparation
 
 ###  Dependencies
 
