@@ -22,7 +22,7 @@ Software:
 cd /path/to/install
 git clone https://github.com/sc-zhang/popCNV.git
 cd popCNV/bin
-chmod +x *.py
+chmod +x *
 echo 'export PATH=/path/to/install/popCNV/bin:$PATH' >> ~/.bash_profile
 source ~/.bash_profile
 ```
@@ -30,7 +30,7 @@ source ~/.bash_profile
 ### Usage
 
 ```sh
-popCNV.py -g genome.fasta -s 1000 -r read_depth/ -b bam_files/ -l gene.list -w wrk_dir --group group.list --sample sample.group --wild 0
+popCNV -g genome.fasta -s 1000 -r read_depth/ -b bam_files/ -l gene.list -w wrk_dir --group group.list --sample sample.group --wild 0
 ```
 
 **-g, --genome** fasta file of genome
