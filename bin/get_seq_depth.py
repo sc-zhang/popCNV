@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 import sys
 import os
+import pysam
 import multiprocessing
 
 
 def calc_depth(genome_size, in_bam, sp):
 	read_size = 0
-	with os.popen("samtools view "+in_bam, 'r') as fin:
+	with pysam.AlignmentFile(in_bam, 'rb') as fin:
 		for line in fin:
-			data = line.strip().split()
-			read_size += len(data[9])
-	
+			ql = fin.query_length
+			if ql != -1:
+				read_size += ql
 	return read_size*1.0/genome_size, sp
 
 

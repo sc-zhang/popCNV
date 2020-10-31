@@ -11,10 +11,10 @@ Zhang Shengcheng, Zhang Xingtan* 2020. "PopCNV: bridging gaps between CNV and se
 
 Python modules:  
 &ensp;&ensp;&ensp;&ensp;numpy  
-&ensp;&ensp;&ensp;&ensp;scipy.stats  
+&ensp;&ensp;&ensp;&ensp;scipy.stats 
+&ensp;&ensp;&ensp;&ensp;pysam
 Software:  
 &ensp;&ensp;&ensp;&ensp;mosdepth  
-&ensp;&ensp;&ensp;&ensp;samtools  
 
 ### Installation
 
