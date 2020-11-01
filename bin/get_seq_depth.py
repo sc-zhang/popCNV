@@ -9,7 +9,7 @@ def calc_depth(genome_size, in_bam, sp):
 	read_size = 0
 	with pysam.AlignmentFile(in_bam, 'rb') as fin:
 		for line in fin:
-			ql = fin.query_length
+			ql = line.infer_query_length()
 			if ql != -1:
 				read_size += ql
 	return read_size*1.0/genome_size, sp
