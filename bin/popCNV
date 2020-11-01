@@ -38,7 +38,7 @@ def convert_rd_to_cn(in_gc, in_rd, out_cn, log_file):
 	os.system(cmd)
 
 
-def Calc_CNV_pipeline(genome, win_size, rd_dir, bam_dir_or_seq_depth, gene_list, group_file, sample_file, wild_group, wrk_dir, rerun, ts):
+def popCNV_pipeline(genome, win_size, rd_dir, bam_dir_or_seq_depth, gene_list, group_file, sample_file, wild_group, wrk_dir, rerun, ts):
 	if wrk_dir == '/':
 		time_print("Fatal error: cannot use root directory as working directory")
 		sys.exit(0)
@@ -53,6 +53,8 @@ def Calc_CNV_pipeline(genome, win_size, rd_dir, bam_dir_or_seq_depth, gene_list,
 	if not os.path.exists(wrk_dir):
 		os.mkdir(wrk_dir)
 	
+	script_dir = sys.path[0]
+
 	log_file = os.path.join(wrk_dir, 'full.log')
 	if os.path.exists(log_file):
 		os.remove(log_file)
@@ -61,7 +63,8 @@ def Calc_CNV_pipeline(genome, win_size, rd_dir, bam_dir_or_seq_depth, gene_list,
 	log_write(log_file, "Step1: GC Statistics")
 	gc_file = os.path.join(wrk_dir, "01.GC.stat")
 	if not os.path.exists(gc_file):
-		cmd = "GC_stat.py -g %s -b %d -o %s -t %d &>> %s"%(genome, win_size, gc_file, ts, log_file)
+		gc_script = os.path.join(script_dir, "GC_stat.py")
+		cmd = "%s -g %s -b %d -o %s -t %d &>> %s"%(gc_script, genome, win_size, gc_file, ts, log_file)
 		print("\tRunning: %s"%cmd)
 		os.system(cmd)
 	else:
@@ -71,7 +74,8 @@ def Calc_CNV_pipeline(genome, win_size, rd_dir, bam_dir_or_seq_depth, gene_list,
 	log_write(log_file, "Step2: Getting samples sequencing depth")
 	s_dep = os.path.join(wrk_dir, "02.Sample.depth")
 	if not os.path.exists(s_dep) and os.path.isdir(bam_dir_or_seq_depth):
-		cmd = "get_seq_depth.py %s %s %s %d &>> %s"%(genome, bam_dir_or_seq_depth, s_dep, ts, log_file)
+		seq_depth_script = os.path.join(script_dir, "get_seq_depth.py")
+		cmd = "%s %s %s %s %d &>> %s"%(seq_depth_script, genome, bam_dir_or_seq_depth, s_dep, ts, log_file)
 		print("\tRunning: %s"%cmd)
 		os.system(cmd)
 	elif os.path.isfile(bam_dir_or_seq_depth):
@@ -86,7 +90,8 @@ def Calc_CNV_pipeline(genome, win_size, rd_dir, bam_dir_or_seq_depth, gene_list,
 	norm_rd_dir = os.path.join(wrk_dir, "03.rd")
 	if not os.path.exists(norm_rd_dir):
 		os.mkdir(norm_rd_dir)
-		cmd = "normalization_mosdepth.py %s %s %s %d &>> %s"%(rd_dir, s_dep, norm_rd_dir, ts, log_file)
+		rd_script = os.path.join(script_dir, "normalization_mosdepth.py")
+		cmd = "%s %s %s %s %d &>> %s"%(rd_script, rd_dir, s_dep, norm_rd_dir, ts, log_file)
 		print("\tRunning: %s"%cmd)
 		os.system(cmd)
 	else:
@@ -114,7 +119,8 @@ def Calc_CNV_pipeline(genome, win_size, rd_dir, bam_dir_or_seq_depth, gene_list,
 	log_write(log_file, "Step5: Getting genes CN with all samples")
 	cn_file = os.path.join(wrk_dir, "05.genes.cn")
 	if not os.path.exists(cn_file):
-		cmd = "get_gene_cn.py %s %s %s &>> %s"%(cn_dir, gene_list, cn_file, log_file)
+		cn_script = os.path.join(script_dir, "get_gene_cn.py")
+		cmd = "%s %s %s %s &>> %s"%(cn_script, cn_dir, gene_list, cn_file, log_file)
 		print("\tRunning: %s"%cmd)
 		os.system(cmd)
 	else:
@@ -124,7 +130,8 @@ def Calc_CNV_pipeline(genome, win_size, rd_dir, bam_dir_or_seq_depth, gene_list,
 	log_write(log_file, "Step6: Rounding CN on genes")
 	round_cn_file = os.path.join(wrk_dir, "06.genes.round.cn")
 	if not os.path.exists(round_cn_file):
-		cmd = "rounding_CN.py %s %s &>> %s"%(cn_file, round_cn_file, log_file)
+		round_script = os.path.join(script_dir, "rounding_CN.py") 
+		cmd = "%s %s %s &>> %s"%(round_script, cn_file, round_cn_file, log_file)
 		print("\tRunning: %s"%cmd)
 		os.system(cmd)
 	else:
@@ -134,7 +141,8 @@ def Calc_CNV_pipeline(genome, win_size, rd_dir, bam_dir_or_seq_depth, gene_list,
 	log_write(log_file, "Step7: Calculating RFD and F-test")
 	rfd_dir = os.path.join(wrk_dir, "07.RFD")
 	if not os.path.exists(rfd_dir):
-		cmd = "calc_RFD.py -i %s -g %s -s %s -w %s -o %s &>> %s"%(round_cn_file, group_file, sample_file, wild_group, rfd_dir, log_file)
+		RFD_script = os.path.join(script_dir, "calc_RFD.py")
+		cmd = "%s -i %s -g %s -s %s -w %s -o %s &>> %s"%(RFD_script, round_cn_file, group_file, sample_file, wild_group, rfd_dir, log_file)
 		print("\tRunning: %s"%cmd)
 		os.system(cmd)
 	else:
@@ -156,4 +164,4 @@ if __name__ == "__main__":
 	sample_file = opts.sample
 	wild_group = opts.wild
 	rerun = opts.rerun
-	Calc_CNV_pipeline(genome, win_size, rd_dir, bam_dir_or_seq_depth, gene_list, group_file, sample_file, wild_group, wrk_dir, rerun, ts)
+	popCNV_pipeline(genome, win_size, rd_dir, bam_dir_or_seq_depth, gene_list, group_file, sample_file, wild_group, wrk_dir, rerun, ts)
