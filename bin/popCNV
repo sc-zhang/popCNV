@@ -32,8 +32,9 @@ def log_write(log_file, info):
 		fout.write(info+"\n")
 
 
-def convert_rd_to_cn(in_gc, in_rd, out_cn, log_file):
-	cmd = "convert_RD_to_CN.py %s %s %s &>> %s"%(in_gc, in_rd, out_cn, log_file)
+def convert_rd_to_cn(script_dir, in_gc, in_rd, out_cn, log_file):
+	convert_script = os.path.join(script_dir, "convert_RD_to_CN.py")
+	cmd = "%s %s %s %s &>> %s"%(convert_script, in_gc, in_rd, out_cn, log_file)
 	log_write(log_file, "\t%s"%cmd)
 	os.system(cmd)
 
@@ -108,7 +109,7 @@ def popCNV_pipeline(genome, win_size, rd_dir, bam_dir_or_seq_depth, gene_list, g
 			if rd.split('.')[-1].lower() != 'rd':
 				continue
 			sp = rd.split('.')[0]
-			r = pool.apply_async(convert_rd_to_cn, args=(gc_file, os.path.join(norm_rd_dir, rd), os.path.join(cn_dir, sp+".CN"), log_file, ))
+			r = pool.apply_async(convert_rd_to_cn, args=(script_dir, gc_file, os.path.join(norm_rd_dir, rd), os.path.join(cn_dir, sp+".CN"), log_file, ))
 			res.append(r)
 		pool.close()
 		pool.join()
