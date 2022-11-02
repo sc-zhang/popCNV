@@ -3,7 +3,7 @@ from pop_cnv.io.loader import FastaLoader
 from pop_cnv.io.message import Message
 from pop_cnv.worker.generator import BIN
 from pop_cnv.worker.runner import Runner
-from os import listdir, path, chdir
+from os import listdir, path, chdir, remove
 from numpy import median, isnan, isinf, bincount
 from scipy.stats import f_oneway
 import pysam
@@ -120,11 +120,14 @@ class Norm:
                 ep = int(data[2])
                 rd = float(data[-1])*1./s_ratio
                 rd_db[tuple([chrn, sp, ep])] = rd
-        return rd_db, smp
+        with open(".__tmp__%s.rd" % smp, 'w') as fout:
+            for _ in rd_db:
+                chrn, sp, ep = _
+                fout.write("%s\t%d\t%d\t%f\n" % (chrn, sp, ep, rd_db[_]))
 
     def norm(self, mos_path, sample_depth_db, threads):
         pool = Pool(processes=threads)
-        res = []
+        smp_list = []
         for fn in listdir(mos_path):
             if not fn.endswith(".regions.bed.gz"):
                 continue
@@ -132,14 +135,24 @@ class Norm:
             if smp not in sample_depth_db:
                 continue
             mos_file = path.join(mos_path, fn)
-            r = pool.apply_async(self.__sub_norm, args=(mos_file, smp, sample_depth_db[smp],))
-            res.append(r)
+            pool.apply_async(self.__sub_norm, args=(mos_file, smp, sample_depth_db[smp],))
+            smp_list.append(smp)
         pool.close()
         pool.join()
 
-        for r in res:
-            rd_db, smp = r.get()
-            self.norm_db[smp] = rd_db
+        for smp in smp_list:
+            tmp_file = '.__tmp__%s.rd' % smp
+            with open(tmp_file, 'r') as fin:
+                for line in fin:
+                    data = line.strip().split()
+                    chrn = data[0]
+                    sp = int(data[1])
+                    ep = int(data[2])
+                    rd = float(data[3])
+                    if smp not in self.norm_db:
+                        self.norm_db[smp] = {}
+                    self.norm_db[smp][tuple([chrn, sp, ep])] = rd
+            remove(tmp_file)
 
 
 class CN:

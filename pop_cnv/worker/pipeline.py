@@ -34,6 +34,7 @@ class Pipeline:
             makedirs(mos_path)
             mos_runner = calculator.BamDepth()
             mos_runner.run(self.bam_path, self.win_size, mos_path, self.threads)
+            msg.info("Done")
         else:
             msg.info("Directory %s found, skipping..." % mos_path)
 
@@ -44,13 +45,16 @@ class Pipeline:
             gc_runner = calculator.GC()
             gc_runner.stat(self.genome, self.win_size, self.threads)
             gc_db = gc_runner.gc_db
+            msg.info("Writing GC proportion...")
             gc_writer = writer.GCWriter(gc_file)
             gc_writer.write(gc_db)
+            msg.info("Done")
         else:
             msg.info("File %s found, loading..." % gc_file)
             gc_loader = loader.GCLoader()
             gc_loader.load(gc_file)
             gc_db = gc_loader.bed_db
+            msg.info("Loaded")
 
         msg.info("Step02: Depth of samples")
         depth_file = path.join(self.workdir, step_list[2])
@@ -59,13 +63,16 @@ class Pipeline:
             sd_runner = calculator.SeqDepth()
             sd_runner.calc(self.genome, self.bam_path, self.threads)
             sd_db = sd_runner.depth_db
+            msg.info("Writing depth")
             sd_writer = writer.DepthWriter(depth_file)
             sd_writer.write(sd_db)
+            msg.info("Done")
         else:
             msg.info("File %s found, loading..." % depth_file)
             sd_loader = loader.DepthLoader()
             sd_loader.load(depth_file)
             sd_db = sd_loader.depth_db
+            msg.info("Loaded")
 
         msg.info("Step03: Read depth")
         rd_file = path.join(self.workdir, step_list[3])
@@ -74,13 +81,16 @@ class Pipeline:
             rd_runner = calculator.Norm()
             rd_runner.norm(mos_path, sd_db, self.threads)
             rd_db = rd_runner.norm_db
+            msg.info("Writing read depth")
             rd_writer = writer.BEDWriter(rd_file)
             rd_writer.write(rd_db)
+            msg.info("Done")
         else:
             msg.info("File %s found, loading..." % rd_file)
             rd_loader = loader.BEDLoader()
             rd_loader.load(rd_file)
             rd_db = rd_loader.bed_db
+            msg.info("Loaded")
 
         msg.info("Step04: CN")
         cn_file = path.join(self.workdir, step_list[4])
@@ -89,13 +99,16 @@ class Pipeline:
             cn_runner = calculator.CN()
             cn_runner.convert(gc_db, rd_db, self.threads)
             cn_db = cn_runner.cn_db
+            msg.info("Writing CN")
             cn_writer = writer.BEDWriter(cn_file)
             cn_writer.write(cn_db)
+            msg.info("Done")
         else:
             msg.info("File %s found, loading..." % cn_file)
             cn_loader = loader.BEDLoader()
             cn_loader.load(cn_file)
             cn_db = cn_loader.bed_db
+            msg.info("Loaded")
 
         msg.info("Step05: Gene CN")
         gene_cn_file = path.join(self.workdir, step_list[5])
@@ -107,13 +120,16 @@ class Pipeline:
             gene_cn_runner = calculator.GeneCN()
             gene_cn_runner.calc(cn_db, gene_bed_db)
             gene_cn_db = gene_cn_runner.gene_cn
+            msg.info("Writing Gene CN")
             gene_cn_writer = writer.GeneCNWriter(gene_cn_file)
             gene_cn_writer.write(gene_cn_db)
+            msg.info("Done")
         else:
             msg.info("File %s found, loading..." % gene_cn_file)
             gene_cn_loader = loader.GeneCNLoader()
             gene_cn_loader.load(gene_cn_file)
             gene_cn_db = gene_cn_loader.gene_cn
+            msg.info("Loaded")
 
         msg.info("Step06: Rounding CN")
         round_cn_file = path.join(self.workdir, step_list[6])
@@ -122,17 +138,21 @@ class Pipeline:
             round_cn_runner = calculator.RoundCN()
             round_cn_runner.round(gene_cn_db)
             round_cn_db = round_cn_runner.round_cn
+            msg.info("Writing Rounded Gene CN")
             round_cn_writer = writer.GeneCNWriter(round_cn_file)
             round_cn_writer.write(round_cn_db)
+            msg.info("Done")
         else:
             msg.info("File %s found, loading..." % round_cn_file)
             round_cn_loader = loader.GeneCNLoader()
             round_cn_loader.load(round_cn_file)
             round_cn_db = round_cn_loader.gene_cn
+            msg.info("Loaded")
 
         msg.info("Step07: RFD and F-test")
         rfd_dir = path.join(self.workdir, step_list[7])
         if not path.exists(rfd_dir):
+            msg.info("Analyzing RFD")
             makedirs(rfd_dir)
             grp_loader = loader.GRPLoader()
             grp_loader.load(self.group)
@@ -140,8 +160,10 @@ class Pipeline:
             rfd_runner = calculator.RFD()
             rfd_runner.calc(round_cn_db, grp_db, self.wild_grp)
             rfd_db = rfd_runner.rfd_db
+            msg.info("Writing RFD")
             rfd_writer = writer.TopRFDWriter(rfd_dir)
             rfd_writer.write(rfd_db)
+            msg.info("Done")
         else:
             msg.info("Directory %s found, completing" % rfd_dir)
 
