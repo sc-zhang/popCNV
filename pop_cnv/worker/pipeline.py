@@ -1,4 +1,5 @@
 from os import makedirs, path, chdir
+from gc import collect
 from pop_cnv.io import message, loader, writer
 from pop_cnv.worker import calculator
 
@@ -50,6 +51,7 @@ class Pipeline:
             gc_writer = writer.GCWriter(gc_file)
             gc_writer.write(gc_db)
             del gc_db
+            collect()
             msg.info("Done")
         else:
             msg.info("File %s found, skipping..." % gc_file)
@@ -80,7 +82,6 @@ class Pipeline:
             msg.info("Calculating read depth")
             rd_runner = calculator.Norm()
             rd_runner.norm(mos_path, sd_db, self.threads)
-            del sd_db
             rd_db = rd_runner.norm_db
             msg.info("Writing read depth")
             rd_writer = writer.BEDWriter(rd_file)
@@ -104,6 +105,7 @@ class Pipeline:
             cn_runner = calculator.CN()
             cn_runner.convert(gc_file, rd_db, self.threads)
             del rd_db
+            collect()
             cn_db = cn_runner.cn_db
             msg.info("Writing CN")
             cn_writer = writer.BEDWriter(cn_file)
@@ -130,6 +132,7 @@ class Pipeline:
             gene_cn_runner = calculator.GeneCN()
             gene_cn_runner.calc(cn_db, gene_bed_db)
             del cn_db
+            collect()
             gene_cn_db = gene_cn_runner.gene_cn
             msg.info("Writing Gene CN")
             gene_cn_writer = writer.GeneCNWriter(gene_cn_file)
@@ -153,6 +156,7 @@ class Pipeline:
             round_cn_runner = calculator.RoundCN()
             round_cn_runner.round(gene_cn_db)
             del gene_cn_db
+            collect()
             round_cn_db = round_cn_runner.round_cn
             msg.info("Writing Rounded Gene CN")
             round_cn_writer = writer.GeneCNWriter(round_cn_file)
@@ -178,11 +182,11 @@ class Pipeline:
             rfd_runner = calculator.RFD()
             rfd_runner.calc(round_cn_db, grp_db, self.wild_grp)
             del round_cn_db
+            collect()
             rfd_db = rfd_runner.rfd_db
             msg.info("Writing RFD")
             rfd_writer = writer.TopRFDWriter(rfd_dir)
             rfd_writer.write(rfd_db)
-            del rfd_db
             msg.info("Done")
         else:
             msg.info("Directory %s found, completing" % rfd_dir)
