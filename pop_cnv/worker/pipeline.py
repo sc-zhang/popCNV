@@ -94,7 +94,7 @@ class Pipeline:
                 rd_db = rd_loader.bed_db
                 msg.info("Loaded")
             else:
-                msg.info("File % found, skipping..." % cn_file)
+                msg.info("File %s found, skipping..." % cn_file)
 
         msg.info("Step04: CN")
         gene_cn_file = path.join(self.workdir, step_list[5])
