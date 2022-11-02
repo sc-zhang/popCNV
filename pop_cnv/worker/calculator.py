@@ -16,12 +16,13 @@ class GC:
         self.__bins = {}
         self.__fa_db = {}
 
-    def __sub_stat(self, chrn):
+    @staticmethod
+    def __sub_stat(bins, seq, chrn):
         gc_list = []
-        for sp, ep in self.__bins:
+        for sp, ep in bins:
             gc_cnt = 0
             for i in range(sp - 1, ep):
-                if self.__fa_db[chrn][i].lower() == 'g' or self.__fa_db[chrn][i].lower() == 'c':
+                if seq[i].lower() == 'g' or seq[i].lower() == 'c':
                     gc_cnt += 1
             gc_list.append([sp, ep, int(gc_cnt * 100.0 / (ep - sp + 1))])
         return gc_list, chrn
@@ -33,7 +34,7 @@ class GC:
         pool = Pool(processes=threads)
         res = []
         for chrn in self.__fa_db:
-            r = pool.apply_async(self.__sub_stat, args=(chrn, ))
+            r = pool.apply_async(self.__sub_stat, args=(self.__bins, self.__fa_db[chrn], chrn, ))
             res.append(r)
         pool.close()
         pool.join()
