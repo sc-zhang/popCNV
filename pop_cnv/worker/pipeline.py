@@ -74,6 +74,8 @@ class Pipeline:
 
         msg.info("Step03: Read depth")
         rd_file = path.join(self.workdir, step_list[3])
+        cn_file = path.join(self.workdir, step_list[4])
+        rd_db = {}
         if not path.exists(rd_file):
             msg.info("Calculating read depth")
             rd_runner = calculator.Norm()
@@ -85,14 +87,18 @@ class Pipeline:
             rd_writer.write(rd_db)
             msg.info("Done")
         else:
-            msg.info("File %s found, loading..." % rd_file)
-            rd_loader = loader.BEDLoader()
-            rd_loader.load(rd_file)
-            rd_db = rd_loader.bed_db
-            msg.info("Loaded")
+            if not path.exists(cn_file):
+                msg.info("File %s found, loading..." % rd_file)
+                rd_loader = loader.BEDLoader()
+                rd_loader.load(rd_file)
+                rd_db = rd_loader.bed_db
+                msg.info("Loaded")
+            else:
+                msg.info("File % found, skipping..." % cn_file)
 
         msg.info("Step04: CN")
-        cn_file = path.join(self.workdir, step_list[4])
+        gene_cn_file = path.join(self.workdir, step_list[5])
+        cn_db = {}
         if not path.exists(cn_file):
             msg.info("Calculating CN")
             cn_runner = calculator.CN()
@@ -104,14 +110,18 @@ class Pipeline:
             cn_writer.write(cn_db)
             msg.info("Done")
         else:
-            msg.info("File %s found, loading..." % cn_file)
-            cn_loader = loader.BEDLoader()
-            cn_loader.load(cn_file)
-            cn_db = cn_loader.bed_db
-            msg.info("Loaded")
+            if not path.exists(gene_cn_file):
+                msg.info("File %s found, loading..." % cn_file)
+                cn_loader = loader.BEDLoader()
+                cn_loader.load(cn_file)
+                cn_db = cn_loader.bed_db
+                msg.info("Loaded")
+            else:
+                msg.info("File %s found, skipping..." % gene_cn_file)
 
         msg.info("Step05: Gene CN")
-        gene_cn_file = path.join(self.workdir, step_list[5])
+        round_cn_file = path.join(self.workdir, step_list[6])
+        gene_cn_db = {}
         if not path.exists(gene_cn_file):
             msg.info("Calculating Gene CN")
             gene_loader = loader.GeneLoader()
@@ -126,14 +136,18 @@ class Pipeline:
             gene_cn_writer.write(gene_cn_db)
             msg.info("Done")
         else:
-            msg.info("File %s found, loading..." % gene_cn_file)
-            gene_cn_loader = loader.GeneCNLoader()
-            gene_cn_loader.load(gene_cn_file)
-            gene_cn_db = gene_cn_loader.gene_cn
-            msg.info("Loaded")
+            if not path.exists(round_cn_file):
+                msg.info("File %s found, loading..." % gene_cn_file)
+                gene_cn_loader = loader.GeneCNLoader()
+                gene_cn_loader.load(gene_cn_file)
+                gene_cn_db = gene_cn_loader.gene_cn
+                msg.info("Loaded")
+            else:
+                msg.info("File %s found, skipping..." % round_cn_file)
 
         msg.info("Step06: Rounding CN")
-        round_cn_file = path.join(self.workdir, step_list[6])
+        rfd_dir = path.join(self.workdir, step_list[7])
+        round_cn_db = {}
         if not path.exists(round_cn_file):
             msg.info("Rounding Gene CN")
             round_cn_runner = calculator.RoundCN()
@@ -145,14 +159,16 @@ class Pipeline:
             round_cn_writer.write(round_cn_db)
             msg.info("Done")
         else:
-            msg.info("File %s found, loading..." % round_cn_file)
-            round_cn_loader = loader.GeneCNLoader()
-            round_cn_loader.load(round_cn_file)
-            round_cn_db = round_cn_loader.gene_cn
-            msg.info("Loaded")
+            if not path.exists(rfd_dir):
+                msg.info("File %s found, loading..." % round_cn_file)
+                round_cn_loader = loader.GeneCNLoader()
+                round_cn_loader.load(round_cn_file)
+                round_cn_db = round_cn_loader.gene_cn
+                msg.info("Loaded")
+            else:
+                msg.info("Directory %s found, skipping..." % rfd_dir)
 
         msg.info("Step07: RFD and F-test")
-        rfd_dir = path.join(self.workdir, step_list[7])
         if not path.exists(rfd_dir):
             msg.info("Analyzing RFD")
             makedirs(rfd_dir)
