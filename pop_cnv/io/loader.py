@@ -90,9 +90,7 @@ class GeneLoader:
                 sp = int(data[1])
                 ep = int(data[2])
                 gn = data[3]
-                if gn not in self.bed_db:
-                    self.bed_db[gn] = []
-                self.bed_db[gn].append([chrn, sp, ep])
+                self.bed_db[gn] = [chrn, sp, ep]
 
 
 class GeneCNLoader:
