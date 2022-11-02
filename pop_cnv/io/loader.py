@@ -3,9 +3,8 @@ class GCLoader:
     This class is used for loading gc file like below:
     Chromosome    Start_position  End_position    value
     """
-    def __init__(self, gc_file):
+    def __init__(self):
         self.bed_db = {}
-        self.load(gc_file)
 
     def load(self, gc_file):
         with open(gc_file, 'r') as fin:
@@ -22,9 +21,8 @@ class BEDLoader:
     This class is used for loading files like below:
     Sample  Chromosome    Start_position  End_position    value
     """
-    def __init__(self, bed_file):
+    def __init__(self):
         self.bed_db = {}
-        self.load(bed_file)
 
     def load(self, bed_file):
         with open(bed_file, 'r') as fin:
@@ -81,9 +79,8 @@ class GeneLoader:
     This class is used for loading gc file like below:
     Chromosome    Start_position  End_position    GeneID
     """
-    def __init__(self, gene_bed):
+    def __init__(self):
         self.bed_db = {}
-        self.load(gene_bed)
 
     def load(self, gene_bed):
         with open(gene_bed, 'r') as fin:
@@ -103,9 +100,8 @@ class GeneCNLoader:
     This class is used for loading gc file like below:
     Gene    sample1_cn  sample2_cn  sample3_cn ...
     """
-    def __init__(self, gene_cn_file):
+    def __init__(self):
         self.gene_cn = {}
-        self.load(gene_cn_file)
 
     def load(self, gene_cn_file):
         with open(gene_cn_file, 'r') as fin:
