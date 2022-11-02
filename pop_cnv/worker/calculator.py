@@ -123,7 +123,7 @@ class Norm:
         with open(".__tmp__%s.rd" % smp, 'w') as fout:
             for _ in rd_db:
                 chrn, sp, ep = _
-                fout.write("%s\t%d\t%d\t%f\n" % (chrn, sp, ep, rd_db[_]))
+                fout.write("%s\t%d\t%d\t%s\n" % (chrn, sp, ep, str(rd_db[_])))
 
     def norm(self, mos_path, sample_depth_db, threads):
         pool = Pool(processes=threads)
@@ -190,7 +190,7 @@ class CN:
         with open(tmp_file, 'w') as fout:
             for _ in cn_db:
                 chrn, sp, ep = _
-                fout.write("%s\t%d\t%d\t%f\n" % (chrn, sp, ep, cn_db[_]))
+                fout.write("%s\t%d\t%d\t%s\n" % (chrn, sp, ep, str(cn_db[_])))
 
     def convert(self, gc_db, rd_db, threads):
         pool = Pool(processes=threads)
@@ -200,13 +200,13 @@ class CN:
                 with open(rd_tmp_file, 'w') as fout:
                     for _ in rd_db[smp]:
                         chrn, sp, ep = _
-                        fout.write("%s\t%d\t%d\t%f\n" % (chrn, sp, ep, rd_db[smp][_]))
+                        fout.write("%s\t%d\t%d\t%s\n" % (chrn, sp, ep, str(rd_db[smp][_])))
             pool.apply_async(self.__sub_convert, args=(gc_db, rd_tmp_file, smp, ))
         pool.close()
         pool.join()
 
         for smp in rd_db:
-            rd_tmp_file = '.tmp__%s.cn' % smp
+            rd_tmp_file = '.__tmp__%s.cn' % smp
             cn_tmp_file = '.__tmp__%s.cn' % smp
             with open(cn_tmp_file, 'r') as fin:
                 for line in fin:
@@ -252,6 +252,10 @@ class GeneCN:
                 if chrn not in conv_cn_db[smp]:
                     conv_cn_db[smp][chrn] = []
                 conv_cn_db[smp][chrn].append([sp, ep, cn_db[smp][_]])
+
+            for chrn in conv_cn_db[smp]:
+                conv_cn_db[smp][chrn] = sorted(conv_cn_db[smp][chrn])
+
         gn_cn = {}
         for gn in gene_bed:
             gn_cn[gn] = {}

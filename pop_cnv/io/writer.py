@@ -14,7 +14,7 @@ class GCWriter:
             for _ in sorted(gc_db):
                 chrn, sp, ep = _
                 val = gc_db[_]
-                fout.write("%s\t%d\t%d\t%f\n" % (chrn, sp, ep, val))
+                fout.write("%s\t%d\t%d\t%d\n" % (chrn, sp, ep, val))
 
 
 class BEDWriter:
@@ -57,6 +57,7 @@ class GeneCNWriter:
         self.gene_cn_file = gene_cn_file
 
     def write(self, gene_cn):
+        sample_list = []
         for _ in gene_cn:
             sample_list = sorted(gene_cn[_])
             break

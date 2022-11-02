@@ -13,7 +13,7 @@ class GCLoader:
                 chrn = data[0]
                 sp = int(data[1])
                 ep = int(data[2])
-                self.bed_db[tuple([chrn, sp, ep])] = float(data[3])
+                self.bed_db[tuple([chrn, sp, ep])] = int(data[3])
 
 
 class BEDLoader:
