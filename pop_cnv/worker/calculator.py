@@ -34,7 +34,7 @@ class GC:
         pool = Pool(processes=threads)
         res = []
         for chrn in self.__fa_db:
-            r = pool.apply_async(self.__sub_stat, args=(self.__bins, self.__fa_db[chrn], chrn, ))
+            r = pool.apply_async(self.__sub_stat, args=(self.__bins[chrn], self.__fa_db[chrn], chrn, ))
             res.append(r)
         pool.close()
         pool.join()
