@@ -1,5 +1,5 @@
 from pathos.multiprocessing import Pool
-from pop_cnv.io.loader import FastaLoader
+from pop_cnv.io.loader import FastaLoader, GCLoader
 from pop_cnv.io.message import Message
 from pop_cnv.worker.generator import BIN
 from pop_cnv.worker.runner import Runner
@@ -152,7 +152,6 @@ class Norm:
                     if smp not in self.norm_db:
                         self.norm_db[smp] = {}
                     self.norm_db[smp][tuple([chrn, sp, ep])] = rd
-            remove(tmp_file)
 
 
 class CN:
@@ -160,36 +159,67 @@ class CN:
         self.cn_db = {}
 
     @staticmethod
-    def __sub_convert(gc_db, sub_rd_db, smp):
+    def __sub_convert(gc_file, rd_tmp_file, smp):
+        gc_loader = GCLoader()
+        gc_loader.load(gc_file)
+        gc_db = gc_loader.bed_db
         conv_gc_db = {}
+        sub_rd_db = {}
+        with open(rd_tmp_file, 'r') as fin:
+            for line in fin:
+                data = line.strip().split()
+                chrn = data[0]
+                sp = int(data[1])
+                ep = int(data[2])
+                rd = float(data[3])
+                sub_rd_db[tuple([chrn, sp, ep])] = rd
         for _ in gc_db:
             gc = gc_db[_]
             rd = sub_rd_db[_]
             if gc not in conv_gc_db:
                 conv_gc_db[gc] = []
             conv_gc_db[gc].append(rd)
-
         conv_cn_db = {}
         for gc in conv_gc_db:
-            cn = median(gc_db[gc])
+            cn = median(conv_gc_db[gc])
             conv_cn_db[gc] = cn
         cn_db = {}
         for _ in gc_db:
             cn_db[_] = sub_rd_db[_]*1./conv_cn_db[gc_db[_]]
-        return cn_db, smp
+        tmp_file = '.__tmp__%s.cn' % smp
+        with open(tmp_file, 'w') as fout:
+            for _ in cn_db:
+                chrn, sp, ep = _
+                fout.write("%s\t%d\t%d\t%f\n" % (chrn, sp, ep, cn_db[_]))
 
     def convert(self, gc_db, rd_db, threads):
         pool = Pool(processes=threads)
-        res = []
         for smp in rd_db:
-            r = pool.apply_async(self.__sub_convert, args=(gc_db, rd_db[smp], smp, ))
-            res.append(r)
+            rd_tmp_file = '.__tmp__%s.rd' % smp
+            if not path.exists(rd_tmp_file):
+                with open(rd_tmp_file, 'w') as fout:
+                    for _ in rd_db[smp]:
+                        chrn, sp, ep = _
+                        fout.write("%s\t%d\t%d\t%f\n" % (chrn, sp, ep, rd_db[smp][_]))
+            pool.apply_async(self.__sub_convert, args=(gc_db, rd_tmp_file, smp, ))
         pool.close()
         pool.join()
 
-        for r in res:
-            cn_db, smp = r.get()
-            self.cn_db[smp] = cn_db
+        for smp in rd_db:
+            rd_tmp_file = '.tmp__%s.cn' % smp
+            cn_tmp_file = '.__tmp__%s.cn' % smp
+            with open(cn_tmp_file, 'r') as fin:
+                for line in fin:
+                    data = line.strip().split()
+                    chrn = data[0]
+                    sp = int(data[1])
+                    ep = int(data[2])
+                    cn = float(data[3])
+                    if smp not in self.cn_db:
+                        self.cn_db[smp] = {}
+                    self.cn_db[smp][tuple([chrn, sp, ep])] = cn
+            remove(cn_tmp_file)
+            remove(rd_tmp_file)
 
 
 class GeneCN:

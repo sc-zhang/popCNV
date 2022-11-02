@@ -1,4 +1,4 @@
-from os import makedirs, path
+from os import makedirs, path, chdir
 from pop_cnv.io import message, loader, writer
 from pop_cnv.worker import calculator
 
@@ -26,6 +26,7 @@ class Pipeline:
                      "07.RFD"]
         if not path.exists(self.workdir):
             makedirs(self.workdir)
+        chdir(self.workdir)
 
         msg.info("Step00: Mosdepth")
         mos_path = path.join(self.workdir, step_list[0])
@@ -48,13 +49,10 @@ class Pipeline:
             msg.info("Writing GC proportion...")
             gc_writer = writer.GCWriter(gc_file)
             gc_writer.write(gc_db)
+            del gc_db
             msg.info("Done")
         else:
-            msg.info("File %s found, loading..." % gc_file)
-            gc_loader = loader.GCLoader()
-            gc_loader.load(gc_file)
-            gc_db = gc_loader.bed_db
-            msg.info("Loaded")
+            msg.info("File %s found, skipping..." % gc_file)
 
         msg.info("Step02: Depth of samples")
         depth_file = path.join(self.workdir, step_list[2])
@@ -80,6 +78,7 @@ class Pipeline:
             msg.info("Calculating read depth")
             rd_runner = calculator.Norm()
             rd_runner.norm(mos_path, sd_db, self.threads)
+            del sd_db
             rd_db = rd_runner.norm_db
             msg.info("Writing read depth")
             rd_writer = writer.BEDWriter(rd_file)
@@ -97,7 +96,8 @@ class Pipeline:
         if not path.exists(cn_file):
             msg.info("Calculating CN")
             cn_runner = calculator.CN()
-            cn_runner.convert(gc_db, rd_db, self.threads)
+            cn_runner.convert(gc_file, rd_db, self.threads)
+            del rd_db
             cn_db = cn_runner.cn_db
             msg.info("Writing CN")
             cn_writer = writer.BEDWriter(cn_file)
@@ -119,6 +119,7 @@ class Pipeline:
             gene_bed_db = gene_loader.bed_db
             gene_cn_runner = calculator.GeneCN()
             gene_cn_runner.calc(cn_db, gene_bed_db)
+            del cn_db
             gene_cn_db = gene_cn_runner.gene_cn
             msg.info("Writing Gene CN")
             gene_cn_writer = writer.GeneCNWriter(gene_cn_file)
@@ -137,6 +138,7 @@ class Pipeline:
             msg.info("Rounding Gene CN")
             round_cn_runner = calculator.RoundCN()
             round_cn_runner.round(gene_cn_db)
+            del gene_cn_db
             round_cn_db = round_cn_runner.round_cn
             msg.info("Writing Rounded Gene CN")
             round_cn_writer = writer.GeneCNWriter(round_cn_file)
@@ -159,10 +161,12 @@ class Pipeline:
             grp_db = grp_loader.grp_db
             rfd_runner = calculator.RFD()
             rfd_runner.calc(round_cn_db, grp_db, self.wild_grp)
+            del round_cn_db
             rfd_db = rfd_runner.rfd_db
             msg.info("Writing RFD")
             rfd_writer = writer.TopRFDWriter(rfd_dir)
             rfd_writer.write(rfd_db)
+            del rfd_db
             msg.info("Done")
         else:
             msg.info("Directory %s found, completing" % rfd_dir)
