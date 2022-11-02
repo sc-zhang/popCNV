@@ -21,9 +21,9 @@ Software:
 ```sh
 cd /path/to/install
 git clone https://github.com/sc-zhang/popCNV.git
-cd popCNV/bin
+cd popCNV/pop_cnv
 chmod +x *
-echo 'export PATH=/path/to/install/popCNV/bin:$PATH' >> ~/.bash_profile
+echo 'export PATH=/path/to/install/popCNV/pop_cnv:$PATH' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
