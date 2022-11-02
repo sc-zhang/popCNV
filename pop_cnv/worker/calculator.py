@@ -206,7 +206,7 @@ class CN:
         pool.join()
 
         for smp in rd_db:
-            rd_tmp_file = '.__tmp__%s.cn' % smp
+            rd_tmp_file = '.__tmp__%s.rd' % smp
             cn_tmp_file = '.__tmp__%s.cn' % smp
             with open(cn_tmp_file, 'r') as fin:
                 for line in fin:
