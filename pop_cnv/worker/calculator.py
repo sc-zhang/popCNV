@@ -62,7 +62,7 @@ class SeqDepth:
         genome_size = 0
         fa_db = FastaLoader.load(genome_file)
         for _ in fa_db:
-            genome_size += fa_db[_]
+            genome_size += len(fa_db[_])
 
         pool = Pool(processes=threads)
         res = []
@@ -246,7 +246,7 @@ class RFD:
     def calc(self, round_cn, grp_db, wild_grp):
         for gn in round_cn:
             cn_db = {}
-            pop_list = {}
+            pop_list = []
             for smp in round_cn[gn]:
                 if isnan(round_cn[gn][smp]) or isinf(round_cn[gn][smp]):
                     continue
