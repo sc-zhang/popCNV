@@ -94,7 +94,7 @@ class TopRFDWriter:
         with open(path.join(self.out_dir, "total.list"), 'w') as fout:
             fout.write("#Gene")
             for grp in sorted(rfd_db):
-                fout.writee("\t%s" % grp)
+                fout.write("\t%s" % grp)
             fout.write("\n")
 
             for gn in sorted(gene_rfd_db):
