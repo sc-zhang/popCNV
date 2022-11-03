@@ -67,7 +67,10 @@ class GeneCNWriter:
             for gene in sorted(gene_cn):
                 fout.write("%s" % gene)
                 for smp in sample_list:
-                    fout.write("\t%f" % gene_cn[gene][smp])
+                    if smp not in gene_cn[gene]:
+                        fout.write("\t%f" % float('nan'))
+                    else:
+                        fout.write("\t%f" % gene_cn[gene][smp])
                 fout.write("\n")
 
 
