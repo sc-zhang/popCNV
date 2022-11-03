@@ -120,7 +120,7 @@ class Pipeline:
                 msg.info("Loaded")
             else:
                 msg.info("File %s found, skipping..." % gene_cn_file)
-        exit(-1)
+
         msg.info("Step05: Gene CN")
         round_cn_file = path.join(self.workdir, step_list[6])
         gene_cn_db = {}
@@ -160,7 +160,7 @@ class Pipeline:
             round_cn_db = round_cn_runner.round_cn
             msg.info("Writing Rounded Gene CN")
             round_cn_writer = writer.GeneCNWriter(round_cn_file)
-            round_cn_writer.write(round_cn_db)
+            round_cn_writer.write(round_cn_db, rounded=True)
             msg.info("Done")
         else:
             if not path.exists(rfd_dir):

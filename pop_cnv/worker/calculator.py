@@ -288,7 +288,8 @@ class RoundCN:
         for gn in gn_cn:
             self.round_cn[gn] = {}
             for smp in gn_cn[gn]:
-                self.round_cn[gn][smp] = int(round(gn_cn[gn][smp]))
+                if (not isnan(gn_cn[gn][smp])) and (not isinf(gn_cn[gn][smp])):
+                    self.round_cn[gn][smp] = int(round(gn_cn[gn][smp]))
 
 
 class RFD:
@@ -320,9 +321,12 @@ class RFD:
             for grp in f_db:
                 if grp == wild_grp:
                     continue
-                _, p = f_oneway(cn_db[grp], cn_db[wild_grp])
-
-                RFD = (f_db[grp]-f_db[wild_grp])*1./f_pop
+                try:
+                    _, p_value = f_oneway(cn_db[grp], cn_db[wild_grp])
+                except Exception as e:
+                    Message().warn(repr(e))
+                    p_value = float('nan')
+                rfd_val = (f_db[grp]-f_db[wild_grp])*1./f_pop
                 if grp not in self.rfd_db:
                     self.rfd_db[grp] = []
-                self.rfd_db[grp].append([RFD, p, gn])
+                self.rfd_db[grp].append([rfd_val, p_value, gn])

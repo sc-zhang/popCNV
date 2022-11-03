@@ -1,4 +1,5 @@
 from os import path
+from numpy import isnan, isinf
 
 
 class GCWriter:
@@ -31,7 +32,7 @@ class BEDWriter:
                 for _ in sorted(bed_db[smp]):
                     chrn, sp, ep = _
                     val = bed_db[smp][_]
-                    fout.write("%s\t%s\t%d\t%d\t%f\n" % (smp, chrn, sp, ep, val))
+                    fout.write("%s\t%s\t%d\t%d\t%s\n" % (smp, chrn, sp, ep, str(val)))
 
 
 class DepthWriter:
@@ -56,7 +57,7 @@ class GeneCNWriter:
     def __init__(self, gene_cn_file):
         self.gene_cn_file = gene_cn_file
 
-    def write(self, gene_cn):
+    def write(self, gene_cn, rounded=False):
         sample_list = []
         for _ in gene_cn:
             sample_list = sorted(gene_cn[_])
@@ -70,7 +71,13 @@ class GeneCNWriter:
                     if smp not in gene_cn[gene]:
                         fout.write("\t%f" % float('nan'))
                     else:
-                        fout.write("\t%f" % gene_cn[gene][smp])
+                        if not rounded:
+                            fout.write("\t%f" % gene_cn[gene][smp])
+                        else:
+                            if (not isnan(gene_cn[gene][smp])) and (not isinf(gene_cn[gene][smp])):
+                                fout.write("\t%d" % int(gene_cn[gene][smp]))
+                            else:
+                                fout.write("\t%f" % gene_cn[gene][smp])
                 fout.write("\n")
 
 
@@ -104,7 +111,7 @@ class TopRFDWriter:
             for gn in sorted(gene_rfd_db):
                 fout.write(gn)
                 for grp in sorted(rfd_db):
-                    if grp in grp[gn]:
+                    if grp in gene_rfd_db[gn]:
                         fout.write("\t%f,% f" % (gene_rfd_db[gn][grp][0], gene_rfd_db[gn][grp][1]))
                     else:
                         fout.write("\tnan,nan")
