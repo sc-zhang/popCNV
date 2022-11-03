@@ -120,7 +120,7 @@ class Pipeline:
                 msg.info("Loaded")
             else:
                 msg.info("File %s found, skipping..." % gene_cn_file)
-
+        exit(-1)
         msg.info("Step05: Gene CN")
         round_cn_file = path.join(self.workdir, step_list[6])
         gene_cn_db = {}

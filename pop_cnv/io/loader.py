@@ -34,7 +34,7 @@ class BEDLoader:
                 ep = int(data[3])
                 if smp not in self.bed_db:
                     self.bed_db[smp] = {}
-                self.bed_db[smp][tuple([chrn, sp, ep])] = float(data[3])
+                self.bed_db[smp][tuple([chrn, sp, ep])] = float(data[4])
 
 
 class DepthLoader:
