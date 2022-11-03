@@ -13,8 +13,8 @@ class Main:
     def get_opts():
         group = argparse.ArgumentParser()
         group.add_argument('-g', '--genome', help='Input genome fasta file', required=True)
-        group.add_argument('-s', '--win_size', type=int, help='window size', required=True)
         group.add_argument('-b', '--bam', help='Directory of bam files', required=True)
+        group.add_argument('-s', '--win_size', type=int, help='window size, default=1000', default=1000)
         group.add_argument('-l', '--list', help='List file contain 4 columns: chromosome_name start_position '
                                                 'end_position gene_name',
                            required=True)
