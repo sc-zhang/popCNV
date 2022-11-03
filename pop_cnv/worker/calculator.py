@@ -185,7 +185,11 @@ class CN:
             conv_cn_db[gc] = cn
         cn_db = {}
         for _ in gc_db:
-            cn_db[_] = sub_rd_db[_]*1./conv_cn_db[gc_db[_]]
+            cn = conv_cn_db[gc_db[_]]
+            if cn:
+                cn_db[_] = sub_rd_db[_]*1./cn
+            else:
+                cn_db[_] = float('nan')
         tmp_file = '.__tmp__%s.cn' % smp
         with open(tmp_file, 'w') as fout:
             for _ in cn_db:
