@@ -9,14 +9,14 @@ Zhang Shengcheng, Zhang Xingtan* 2020. "PopCNV: bridging gaps between CNV and se
 
 ###  Dependencies
 
-Python modules:  
+Python modules:
  - numpy
  - scipy
  - pysam
  - pathos
 
-Software:  
- - mosdepth  
+Software:
+ - [mosdepth](https://github.com/brentp/mosdepth)
 
 ### Installation
 
@@ -32,15 +32,15 @@ source ~/.bash_profile
 ### Usage
 
 ```sh
-usage: popCNV [-h] -g GENOME -s WIN_SIZE -b BAM -l LIST -w WORKDIR --group GROUP --wild WILD [-t THREADS]
+usage: popCNV [-h] -g GENOME -b BAM [-s WIN_SIZE] -l LIST -w WORKDIR --group GROUP --wild WILD [-t THREADS]
 
 options:
   -h, --help            show this help message and exit
   -g GENOME, --genome GENOME
                         Input genome fasta file
-  -s WIN_SIZE, --win_size WIN_SIZE
-                        window size
   -b BAM, --bam BAM     Directory of bam files
+  -s WIN_SIZE, --win_size WIN_SIZE
+                        window size, default=1000
   -l LIST, --list LIST  List file contain 4 columns: chromosome_name start_position end_position gene_name
   -w WORKDIR, --workdir WORKDIR
                         Working directory
@@ -60,4 +60,4 @@ RFD is relative frequency difference which was calculated based on wild group
 
 a) a set of list files named with group_name, contain a list of genes with top 5% of RFD based on p<0.05
 
-b) Total.list contains all RFD and p-value of genes in all groups
+b) total.list contains all RFD and p-value of genes in all groups
