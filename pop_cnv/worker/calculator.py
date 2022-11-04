@@ -120,7 +120,7 @@ class Norm:
                 ep = int(data[2])
                 rd = float(data[-1])*1./s_ratio
                 rd_db[tuple([chrn, sp, ep])] = rd
-        with open(".__tmp__%s.rd" % smp, 'w') as fout:
+        with open("__tmp__%s.rd" % smp, 'w') as fout:
             for _ in rd_db:
                 chrn, sp, ep = _
                 fout.write("%s\t%d\t%d\t%s\n" % (chrn, sp, ep, str(rd_db[_])))
@@ -141,7 +141,7 @@ class Norm:
         pool.join()
 
         for smp in smp_list:
-            tmp_file = '.__tmp__%s.rd' % smp
+            tmp_file = '__tmp__%s.rd' % smp
             with open(tmp_file, 'r') as fin:
                 for line in fin:
                     data = line.strip().split()
@@ -190,7 +190,7 @@ class CN:
                 cn_db[_] = sub_rd_db[_]*1./cn
             else:
                 cn_db[_] = float('nan')
-        tmp_file = '.__tmp__%s.cn' % smp
+        tmp_file = '__tmp__%s.cn' % smp
         with open(tmp_file, 'w') as fout:
             for _ in cn_db:
                 chrn, sp, ep = _
@@ -199,7 +199,7 @@ class CN:
     def convert(self, gc_db, rd_db, threads):
         pool = Pool(processes=threads)
         for smp in rd_db:
-            rd_tmp_file = '.__tmp__%s.rd' % smp
+            rd_tmp_file = '__tmp__%s.rd' % smp
             if not path.exists(rd_tmp_file):
                 with open(rd_tmp_file, 'w') as fout:
                     for _ in rd_db[smp]:
@@ -210,8 +210,8 @@ class CN:
         pool.join()
 
         for smp in rd_db:
-            rd_tmp_file = '.__tmp__%s.rd' % smp
-            cn_tmp_file = '.__tmp__%s.cn' % smp
+            rd_tmp_file = '__tmp__%s.rd' % smp
+            cn_tmp_file = '__tmp__%s.cn' % smp
             with open(cn_tmp_file, 'r') as fin:
                 for line in fin:
                     data = line.strip().split()
