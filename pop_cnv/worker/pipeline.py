@@ -2,6 +2,7 @@ from os import makedirs, path, chdir
 from gc import collect
 from pop_cnv.io import message, loader, writer
 from pop_cnv.worker import calculator
+from pop_cnv.worker.dep_check import DepCheck
 
 
 class Pipeline:
@@ -30,6 +31,11 @@ class Pipeline:
         chdir(self.workdir)
 
         msg.info("Step00: Mosdepth")
+        msg.info("Checking mosdepth...")
+        mos_ava = DepCheck().check()
+        if not mos_ava:
+            msg.error("Mosdepth not found, exiting")
+            exit(-1)
         mos_path = path.join(self.workdir, step_list[0])
         if not path.exists(mos_path):
             msg.info("Running mosdepth...")

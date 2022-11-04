@@ -30,7 +30,7 @@ source ~/.bash_profile
 ```
 
 ### Usage
-
+**Notice:** you need add <kbd>mosdepth</kbd> to your <kbd>PATH</kbd>
 ```sh
 usage: popCNV [-h] -g GENOME -b BAM [-s WIN_SIZE] -l LIST -w WORKDIR --group GROUP --wild WILD [-t THREADS]
 
@@ -51,13 +51,7 @@ options:
 ```
 
 ### Results
-
-**06.genes.round.cn** Copy number of genes in all groups
-
-**07.RFD**
-
-RFD is relative frequency difference which was calculated based on wild group
-
-a) a set of list files named with group_name, contain a list of genes with top 5% of RFD based on p<0.05
-
-b) total.list contains all RFD and p-value of genes in all groups
+| File/Directory        | Description                                                                                                                                                                                                                                                       |
+|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **06.genes.round.cn** | Copy number of genes in all groups                                                                                                                                                                                                                                |
+| **07.RFD**            | RFD is relative frequency difference which was calculated based on wild group</br> a) a set of list files named with group_name, contain a list of genes with top 5% of RFD based on p<0.05</br>b) total.list contains all RFD and p-value of genes in all groups |
