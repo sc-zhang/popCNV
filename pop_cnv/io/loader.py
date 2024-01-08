@@ -60,17 +60,15 @@ class FastaLoader:
     def load(fasta_file):
         fa_db = {}
         with open(fasta_file, 'r') as fin:
-            seq = ''
             sid = ''
             for line in fin:
                 if line[0] == '>':
-                    if seq != '':
-                        fa_db[sid] = seq
                     sid = line.strip()[1:]
-                    seq = ''
+                    fa_db[sid] = []
                 else:
-                    seq += line.strip()
-            fa_db[sid] = seq
+                    fa_db[sid].append(line.strip())
+        for sid in fa_db:
+            fa_db[sid] = ''.join(fa_db[sid])
         return fa_db
 
 
