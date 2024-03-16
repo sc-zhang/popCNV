@@ -1,9 +1,7 @@
-from PySide6.QtWidgets import QMessageBox
 from PySide6.QtCore import QObject, Signal
-from os import path
+from os import path, makedirs
 from pop_cnv.worker import calculator
 from pop_cnv.io import loader, writer
-from traceback import format_exc
 
 
 class Worker(QObject):
@@ -65,9 +63,7 @@ class Worker(QObject):
                 gc_writer = writer.GCWriter(gc_file)
                 gc_writer.write(self.gc_db)
             except Exception as e:
-                QMessageBox.critical(self.__parent_form, "GC statistics failed", format_exc())
                 self.progress.emit(" Failed with: %s" % repr(e))
-                self.completed.emit(1)
                 return
         self.progress.emit("")
 
@@ -78,9 +74,7 @@ class Worker(QObject):
             sd_loader.load(self.__seq_depth_file)
             sd_db = sd_loader.depth_db
         except Exception as e:
-            QMessageBox.critical(self.__parent_form, "Sequence depth load failed", format_exc())
             self.progress.emit(" Failed with: %s" % repr(e))
-            self.completed.emit(1)
             return
         self.progress.emit("")
 
@@ -96,9 +90,7 @@ class Worker(QObject):
                 rd_writer = writer.BEDWriter(rd_file)
                 rd_writer.write(self.rd_db)
             except Exception as e:
-                QMessageBox.critical(self.__parent_form, "Calculating read depth failed", format_exc())
                 self.progress.emit(" Failed with: %s" % repr(e))
-                self.completed.emit(1)
                 return
         else:
             if not path.exists(cn_file):
@@ -118,9 +110,7 @@ class Worker(QObject):
                 cn_writer = writer.BEDWriter(cn_file)
                 cn_writer.write(self.cn_db)
             except Exception as e:
-                QMessageBox.critical(self.__parent_form, "Calculating CN failed", format_exc())
                 self.progress.emit(" Failed with: %s" % repr(e))
-                self.completed.emit(1)
                 return
         else:
             if not path.exists(gene_cn_file):
@@ -143,9 +133,7 @@ class Worker(QObject):
                 gene_cn_writer = writer.GeneCNWriter(gene_cn_file)
                 gene_cn_writer.write(self.gene_cn_db)
             except Exception as e:
-                QMessageBox.critical(self.__parent_form, "Calculating gene CN failed", format_exc())
                 self.progress.emit(" Failed with: %s" % repr(e))
-                self.completed.emit(1)
                 return
         else:
             if not path.exists(round_cn_file):
@@ -165,9 +153,7 @@ class Worker(QObject):
                 round_cn_writer = writer.GeneCNWriter(round_cn_file)
                 round_cn_writer.write(self.round_cn_db, rounded=True)
             except Exception as e:
-                QMessageBox.critical(self.__parent_form, "Rounding gene CN failed", format_exc())
                 self.progress.emit(" Failed with: %s" % repr(e))
-                self.completed.emit(1)
                 return
         else:
             if not path.exists(rfd_dir):
@@ -179,6 +165,7 @@ class Worker(QObject):
         # Step 07
         self.progress.emit("RFD and F-test")
         if not path.exists(rfd_dir):
+            makedirs(rfd_dir)
             try:
                 grp_loader = loader.GRPLoader()
                 grp_loader.load(self.__smp_file)
@@ -189,9 +176,7 @@ class Worker(QObject):
                 rfd_writer = writer.TopRFDWriter(rfd_dir)
                 rfd_writer.write(self.rfd_db)
             except Exception as e:
-                QMessageBox.critical(self.__parent_form, "Running RFD or F-test failed", format_exc())
                 self.progress.emit(" Failed with: %s" % repr(e))
-                self.completed.emit(1)
                 return
         self.progress.emit("Done")
         self.completed.emit(1)
