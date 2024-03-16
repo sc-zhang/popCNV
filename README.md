@@ -1,8 +1,8 @@
-## README
-
-### Introduction
+## Introduction
 
 This software is used for calculating copy number of genes, and get top 5% genes which selected by humans.
+
+## popCNV CLI version
 
 ###  Dependencies
 
@@ -52,3 +52,6 @@ options:
 |-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **06.genes.round.cn** | Copy number of genes in all groups                                                                                                                                                                                                                                |
 | **07.RFD**            | RFD is relative frequency difference which was calculated based on wild group</br> a) a set of list files named with group_name, contain a list of genes with top 5% of RFD based on p<0.05</br>b) total.list contains all RFD and p-value of genes in all groups |
+
+
+## popCNV GUI version
