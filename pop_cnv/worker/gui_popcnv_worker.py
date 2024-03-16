@@ -2,6 +2,7 @@ from PySide6.QtCore import QObject, Signal
 from os import path, makedirs
 from pop_cnv.worker import calculator
 from pop_cnv.io import loader, writer
+from gc import collect
 
 
 class Worker(QObject):
@@ -20,13 +21,6 @@ class Worker(QObject):
         self.__wrkdir = None
         self.__wild_group = None
         self.__threads = None
-
-        self.gc_db = None
-        self.rd_db = None
-        self.cn_db = None
-        self.gene_cn_db = None
-        self.round_cn_db = None
-        self.rfd_db = None
 
     def set_param(self,
                   parent_form,
@@ -59,9 +53,11 @@ class Worker(QObject):
             try:
                 gc_runner = calculator.GC()
                 gc_runner.stat(self.__genome_file, self.__win_size, self.__threads)
-                self.gc_db = gc_runner.gc_db
+                gc_db = gc_runner.gc_db
                 gc_writer = writer.GCWriter(gc_file)
-                gc_writer.write(self.gc_db)
+                gc_writer.write(gc_db)
+                del gc_db
+                collect()
             except Exception as e:
                 self.progress.emit(" Failed with: %s" % repr(e))
                 return
@@ -81,14 +77,15 @@ class Worker(QObject):
         # Step 03
         rd_file = path.join(self.__wrkdir, "02.rd.txt")
         cn_file = path.join(self.__wrkdir, "03.cn.txt")
+        rd_db = {}
         self.progress.emit("Calculating read depth")
         if not path.exists(rd_file):
             try:
                 rd_runner = calculator.Norm()
                 rd_runner.norm(self.__mosdepth_dir, sd_db, self.__threads)
-                self.rd_db = rd_runner.norm_db
+                rd_db = rd_runner.norm_db
                 rd_writer = writer.BEDWriter(rd_file)
-                rd_writer.write(self.rd_db)
+                rd_writer.write(rd_db)
             except Exception as e:
                 self.progress.emit(" Failed with: %s" % repr(e))
                 return
@@ -96,19 +93,22 @@ class Worker(QObject):
             if not path.exists(cn_file):
                 rd_loader = loader.BEDLoader()
                 rd_loader.load(rd_file)
-                self.rd_db = rd_loader.bed_db
+                rd_db = rd_loader.bed_db
         self.progress.emit("")
 
         # Step 04
         self.progress.emit("Calculating CN")
         gene_cn_file = path.join(self.__wrkdir, "04.gene_cn.txt")
+        cn_db = {}
         if not path.exists(cn_file):
             try:
                 cn_runner = calculator.CN()
-                cn_runner.convert(gc_file, self.rd_db, self.__threads)
-                self.cn_db = cn_runner.cn_db
+                cn_runner.convert(gc_file, rd_db, self.__threads)
+                del rd_db
+                collect()
+                cn_db = cn_runner.cn_db
                 cn_writer = writer.BEDWriter(cn_file)
-                cn_writer.write(self.cn_db)
+                cn_writer.write(cn_db)
             except Exception as e:
                 self.progress.emit(" Failed with: %s" % repr(e))
                 return
@@ -116,22 +116,25 @@ class Worker(QObject):
             if not path.exists(gene_cn_file):
                 cn_loader = loader.BEDLoader()
                 cn_loader.load(cn_file)
-                self.cn_db = cn_loader.bed_db
+                cn_db = cn_loader.bed_db
         self.progress.emit("")
 
         # Step 05
         self.progress.emit("Calculating gene CN")
         round_cn_file = path.join(self.__wrkdir, "05.gene_cn_round.txt")
+        gene_cn_db = {}
         if not path.exists(gene_cn_file):
             try:
                 gene_loader = loader.GeneLoader()
                 gene_loader.load(self.__gene_list_file)
                 gene_bed_db = gene_loader.bed_db
                 gene_cn_runner = calculator.GeneCN()
-                gene_cn_runner.calc(self.cn_db, gene_bed_db)
-                self.gene_cn_db = gene_cn_runner.gene_cn
+                gene_cn_runner.calc(cn_db, gene_bed_db)
+                del cn_db
+                collect()
+                gene_cn_db = gene_cn_runner.gene_cn
                 gene_cn_writer = writer.GeneCNWriter(gene_cn_file)
-                gene_cn_writer.write(self.gene_cn_db)
+                gene_cn_writer.write(gene_cn_db)
             except Exception as e:
                 self.progress.emit(" Failed with: %s" % repr(e))
                 return
@@ -139,19 +142,22 @@ class Worker(QObject):
             if not path.exists(round_cn_file):
                 gene_cn_loader = loader.GeneCNLoader()
                 gene_cn_loader.load(gene_cn_file)
-                self.gene_cn_db = gene_cn_loader.gene_cn
+                gene_cn_db = gene_cn_loader.gene_cn
         self.progress.emit("")
 
         # Step 06
         self.progress.emit("Rounding CN")
         rfd_dir = path.join(self.__wrkdir, "06.RFD")
+        round_cn_db = {}
         if not path.exists(round_cn_file):
             try:
                 round_cn_runner = calculator.RoundCN()
-                round_cn_runner.round(self.gene_cn_db)
-                self.round_cn_db = round_cn_runner.round_cn
+                round_cn_runner.round(gene_cn_db)
+                del gene_cn_db
+                collect()
+                round_cn_db = round_cn_runner.round_cn
                 round_cn_writer = writer.GeneCNWriter(round_cn_file)
-                round_cn_writer.write(self.round_cn_db, rounded=True)
+                round_cn_writer.write(round_cn_db, rounded=True)
             except Exception as e:
                 self.progress.emit(" Failed with: %s" % repr(e))
                 return
@@ -159,7 +165,7 @@ class Worker(QObject):
             if not path.exists(rfd_dir):
                 round_cn_loader = loader.GeneCNLoader()
                 round_cn_loader.load(round_cn_file)
-                self.round_cn_db = round_cn_loader.gene_cn
+                round_cn_db = round_cn_loader.gene_cn
         self.progress.emit("")
 
         # Step 07
@@ -171,10 +177,12 @@ class Worker(QObject):
                 grp_loader.load(self.__smp_file)
                 grp_db = grp_loader.grp_db
                 rfd_runner = calculator.RFD()
-                rfd_runner.calc(self.round_cn_db, grp_db, self.__wild_group)
-                self.rfd_db = rfd_runner.rfd_db
+                rfd_runner.calc(round_cn_db, grp_db, self.__wild_group)
+                del round_cn_db
+                collect()
+                rfd_db = rfd_runner.rfd_db
                 rfd_writer = writer.TopRFDWriter(rfd_dir)
-                rfd_writer.write(self.rfd_db)
+                rfd_writer.write(rfd_db)
             except Exception as e:
                 self.progress.emit(" Failed with: %s" % repr(e))
                 return
