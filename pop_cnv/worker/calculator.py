@@ -6,8 +6,17 @@ from pop_cnv.worker.runner import Runner
 from os import listdir, path, chdir, remove
 from numpy import median, isnan, isinf, bincount
 from scipy.stats import f_oneway
-import pysam
 import gzip
+
+try:
+    import pysam
+except ModuleNotFoundError as e:
+    import sys
+    if sys.argv[0].endswith("popCNV"):
+        print("ERROR: popCNV cannot running without pysam")
+        raise e
+    else:
+        pass
 
 
 class GC:
