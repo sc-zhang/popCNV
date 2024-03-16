@@ -12,7 +12,8 @@ try:
     import pysam
 except ModuleNotFoundError as e:
     import sys
-    if sys.argv[0].endswith("popCNV.py"):
+    # Only raise error when loading this module by popCNV.py
+    if path.basename(sys.argv[0]) == "popCNV.py":
         print("ERROR: popCNV.py cannot running without pysam")
         raise e
     else:
