@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>832</width>
-    <height>816</height>
+    <height>1030</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>popCNV</string>
@@ -19,7 +25,7 @@
      <x>10</x>
      <y>10</y>
      <width>811</width>
-     <height>131</height>
+     <height>281</height>
     </rect>
    </property>
    <property name="font">
@@ -35,7 +41,7 @@
     <property name="geometry">
      <rect>
       <x>760</x>
-      <y>80</y>
+      <y>230</y>
       <width>41</width>
       <height>41</height>
      </rect>
@@ -53,9 +59,9 @@
    <widget class="QLineEdit" name="text_gene_list_file_path">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>80</y>
-      <width>241</width>
+      <x>110</x>
+      <y>230</y>
+      <width>641</width>
       <height>41</height>
      </rect>
     </property>
@@ -72,8 +78,8 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>80</y>
+      <x>30</x>
+      <y>230</y>
       <width>81</width>
       <height>31</height>
      </rect>
@@ -93,7 +99,7 @@
      <rect>
       <x>110</x>
       <y>80</y>
-      <width>241</width>
+      <width>641</width>
       <height>41</height>
      </rect>
     </property>
@@ -108,6 +114,44 @@
     </property>
    </widget>
    <widget class="QPushButton" name="btn_load_mosdepth">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>130</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_load_seqdepth">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>80</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_load_genome">
     <property name="geometry">
      <rect>
       <x>760</x>
@@ -126,49 +170,11 @@
      <string>...</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_load_seqdepth">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>80</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>16</pointsize>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>...</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_load_gnome">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>30</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>16</pointsize>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>...</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>30</y>
+      <x>20</x>
+      <y>130</y>
       <width>81</width>
       <height>31</height>
      </rect>
@@ -186,7 +192,7 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>20</x>
       <y>80</y>
       <width>81</width>
       <height>31</height>
@@ -205,9 +211,9 @@
    <widget class="QLineEdit" name="text_mosdepth_folder_path">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>30</y>
-      <width>241</width>
+      <x>110</x>
+      <y>130</y>
+      <width>641</width>
       <height>41</height>
      </rect>
     </property>
@@ -226,7 +232,7 @@
      <rect>
       <x>110</x>
       <y>30</y>
-      <width>241</width>
+      <width>641</width>
       <height>41</height>
      </rect>
     </property>
@@ -243,7 +249,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>30</x>
       <y>30</y>
       <width>81</width>
       <height>31</height>
@@ -259,12 +265,69 @@
      <string>Genome:</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="btn_load_smp_list">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>180</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>180</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Sample list:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="text_smp_list_file_path">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>180</y>
+      <width>641</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="grpSettings">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>150</y>
+     <y>360</y>
      <width>811</width>
      <height>131</height>
     </rect>
@@ -410,7 +473,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>350</y>
+     <y>560</y>
      <width>811</width>
      <height>461</height>
     </rect>
@@ -608,7 +671,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QPushButton" name="btn_save_table">
+     <widget class="QPushButton" name="btn_export_table">
       <property name="geometry">
        <rect>
         <x>660</x>
@@ -624,7 +687,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Save</string>
+       <string>Export</string>
       </property>
      </widget>
      <widget class="QPushButton" name="btn_preview_table">
@@ -758,7 +821,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>300</y>
+     <y>510</y>
      <width>811</width>
      <height>41</height>
     </rect>
@@ -770,7 +833,26 @@
     </font>
    </property>
    <property name="text">
-    <string>RUN</string>
+    <string>Run</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_check">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>310</y>
+     <width>811</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Check</string>
    </property>
   </widget>
  </widget>
