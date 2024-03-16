@@ -25,7 +25,7 @@ class Ui_frmMain(object):
     def setupUi(self, frmMain):
         if not frmMain.objectName():
             frmMain.setObjectName(u"frmMain")
-        frmMain.resize(832, 1030)
+        frmMain.setFixedSize(832, 1030)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

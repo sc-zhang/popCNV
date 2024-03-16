@@ -153,6 +153,7 @@ class GPopCNV(QWidget):
 
     def __popcnv_completed(self, v):
         self.__worker_thread.quit()
+        print(self.__worker.rfd_db)
         self.ui.btn_run.setEnabled(True)
 
     def __run_popcnv(self):
