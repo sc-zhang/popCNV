@@ -4,6 +4,7 @@ from pop_cnv.io.message import Message
 from pop_cnv.worker.generator import BIN
 from pop_cnv.worker.runner import Runner
 from os import listdir, path, chdir, remove
+from gc import collect
 from numpy import median, isnan, isinf, bincount
 from scipy.stats import f_oneway
 import gzip
@@ -53,6 +54,9 @@ class GC:
             gc_list, chrn = r.get()
             for sp, ep, gc_prop in gc_list:
                 self.gc_db[tuple([chrn, sp, ep])] = gc_prop
+
+        del self.__fa_db
+        collect()
 
 
 class SeqDepth:
