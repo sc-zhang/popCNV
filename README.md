@@ -23,16 +23,16 @@ Software:
 ```sh
 cd /path/to/install
 git clone https://github.com/sc-zhang/popCNV.git
-cd popCNV
-chmod +x popCNV
-echo 'export PATH=/path/to/install/popCNV:$PATH' >> ~/.bash_profile
+cd popCNV.py
+chmod +x popCNV.py
+echo 'export PATH=/path/to/install/popCNV.py:$PATH' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
 ### Usage
 **Notice:** you need add <kbd>mosdepth</kbd> to your <kbd>PATH</kbd>
 ```sh
-usage: popCNV [-h] -g GENOME -b BAM [-s WIN_SIZE] -l LIST -w WORKDIR --group GROUP --wild WILD [-t THREADS]
+usage: popCNV.py [-h] -g GENOME -b BAM [-s WIN_SIZE] -l LIST -w WORKDIR --group GROUP --wild WILD [-t THREADS]
 
 options:
   -h, --help            show this help message and exit
