@@ -128,3 +128,28 @@ class GRPLoader:
             for line in fin:
                 data = line.strip().split()
                 self.grp_db[data[0]] = data[1]
+
+
+class RFDLoader:
+    def __init__(self):
+        self.rfd_db = {}
+
+    def load(self, rfd_file, file_type="all"):
+        if file_type == "all":
+            with open(rfd_file, 'r') as fin:
+                for line in fin:
+                    data = line.strip().split('\t')
+                    if line[0] == '#':
+                        smp_list = data[1:]
+                    else:
+                        gn = data[0]
+                        self.rfd_db[gn] = {}
+                        for _ in range(len(smp_list)):
+                            rfd, pval = data[_+1].split(',')
+                            self.rfd_db[gn][smp_list[_]] = [float(rfd), float(pval)]
+        else:
+            with open(rfd_file, 'r') as fin:
+                for line in fin:
+                    data = line.strip().split()
+                    gn = data[0]
+                    self.rfd_db[gn] = [float(data[1]), float(data[2])]
