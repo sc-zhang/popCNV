@@ -127,7 +127,7 @@ class GPopCNV(QWidget):
     def __modify_pic_smp_cbox(self):
         self.ui.cbox_pic_smp.clear()
         if self.ui.cbox_pic_data_type.currentText() == "RFD":
-            grp_list = ["All"]
+            grp_list = []
             grp_set = set(self.__grp_db[_] for _ in self.__grp_db)
             for grp in sorted(grp_set):
                 if grp != self.__wild_group:
@@ -365,7 +365,7 @@ class GPopCNV(QWidget):
 
     def __export_pic(self):
         export_file_path = QFileDialog.getSaveFileName(self, "Export Picture",
-                                                       "%s.pdf" % self.ui.cbox_table_data_type.currentText(),
+                                                       "%s.pdf" % self.ui.cbox_pic_data_type.currentText(),
                                                        "pdf(*.pdf)")[0]
         if export_file_path and self.__draw_pic_worker.pic.figure_content:
             try:

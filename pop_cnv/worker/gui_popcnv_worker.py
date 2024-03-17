@@ -366,39 +366,19 @@ class PicDrawWorker(QObject):
             gene_loader = loader.GeneLoader()
             gene_loader.load(self.__gene_list_file_path)
 
-            if self.__sample_name == "All":
-                full_fn = path.join(self.__data_file_path, "total.list")
-                rfd_loader = loader.RFDLoader()
-                rfd_loader.load(full_fn, file_type="all")
-                for gn in rfd_loader.rfd_db:
-                    chrn = gene_loader.bed_db[gn][0]
-                    if self.__chr_name == "All" or self.__chr_name == chrn:
-                        for smp in rfd_loader.rfd_db[gn]:
-                            if smp not in self.__plot_data:
-                                self.__plot_data[smp] = {}
-                            if chrn not in self.__plot_data[smp]:
-                                self.__plot_data[smp][chrn] = {"X": [], "Y": []}
-                            self.__plot_data[smp][chrn]["X"].append(gene_loader.bed_db[gn][1])
-                            self.__plot_data[smp][chrn]["Y"].append(rfd_loader.rfd_db[gn][smp][1])
-                del rfd_loader.rfd_db
-                collect()
-                stat = self.pic.gene_manhattan_graph(self.__plot_data, is_single=False)
-            else:
-                full_fn = path.join(self.__data_file_path, "%s.list" % self.__sample_name)
-                rfd_loader = loader.RFDLoader()
-                rfd_loader.load(full_fn, file_type="single")
-                for gn in rfd_loader.rfd_db:
-                    chrn = gene_loader.bed_db[gn][0]
-                    if self.__chr_name == "All" or self.__chr_name == chrn:
-                        if self.__sample_name not in self.__plot_data:
-                            self.__plot_data[self.__sample_name] = {}
-                        if chrn not in self.__plot_data[self.__sample_name]:
-                            self.__plot_data[self.__sample_name][chrn] = {"X": [], "Y": []}
-                        self.__plot_data[self.__sample_name][chrn]["X"].append(gene_loader.bed_db[gn][1])
-                        self.__plot_data[self.__sample_name][chrn]["Y"].append(rfd_loader.rfd_db[gn][1])
-                del rfd_loader.rfd_db
-                collect()
-                stat = self.pic.gene_manhattan_graph(self.__plot_data, is_single=True)
+            full_fn = path.join(self.__data_file_path, "total.list")
+            rfd_loader = loader.RFDLoader()
+            rfd_loader.load(full_fn, file_type="all")
+            for gn in rfd_loader.rfd_db:
+                chrn = gene_loader.bed_db[gn][0]
+                if self.__chr_name == "All" or self.__chr_name == chrn:
+                    if chrn not in self.__plot_data:
+                        self.__plot_data[chrn] = {"X": [], "Y": []}
+                    self.__plot_data[chrn]["X"].append(gene_loader.bed_db[gn][1])
+                    self.__plot_data[chrn]["Y"].append(rfd_loader.rfd_db[gn][self.__sample_name][1])
+            del rfd_loader.rfd_db
+            collect()
+            stat = self.pic.gene_manhattan_graph(self.__plot_data)
         if stat == "Success":
             self.progress.emit("Done")
         else:

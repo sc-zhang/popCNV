@@ -4,8 +4,7 @@ matplotlib.use("qt5agg")
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.backends.backend_pdf
 import matplotlib.pyplot as plt
-import bioplotz as bp
-from numpy import log2
+from numpy import log2, errstate
 
 
 class PlotCanvas(FigureCanvas):
@@ -23,6 +22,8 @@ class PlotContent:
 
     def gene_line_graph(self, data_db):
         self.figure_content.plt.clf()
+        self.figure_content.plt.rcParams["figure.figsize"] = (20, 8)
+        self.figure_content.plt.rcParams["figure.dpi"] = 300
         try:
             xticks = []
             xlabels = []
@@ -51,28 +52,36 @@ class PlotContent:
             return str(e)
         return "Success"
 
-    def gene_manhattan_graph(self, data_db, is_single=False):
+    def gene_manhattan_graph(self, data_db):
         self.figure_content.plt.clf()
         try:
-            if is_single:
-                plot_data = {}
-                for smp in data_db:
-                    for chrn in data_db[smp]:
-                        plot_data[chrn] = [data_db[smp][chrn]["X"], data_db[smp][chrn]["Y"]]
-                bp.manhattan(plot_data, threshold=[log2(0.05), log2(0.01)], color=["steelblue", "darkorange"],
-                             threshold_line_color=["red", "blue"], log_base=2, reverse=True)
-            else:
-                plot_data = {}
-                nrow = len(data_db)
-                idx = 1
-                for smp in data_db:
-                    self.figure_content.plt.subplot(nrow, 1, idx)
-                    idx += 1
-                    for chrn in data_db[smp]:
-                        plot_data[chrn] = [data_db[smp][chrn]["X"], data_db[smp][chrn]["Y"]]
-                    bp.manhattan(plot_data, threshold=[log2(0.05), log2(0.01)], color=["steelblue", "darkorange"],
-                                 threshold_line_color=["red", "blue"], log_base=2, reverse=True)
+            colors = ['steelblue', 'darkorange']
+            off_set = 0
+            max_x = 0
+            cidx = 0
+            xticks = []
+            xlabels = []
+            for chrn in sorted(data_db):
+                data = []
+                for idx in range(len(data_db[chrn]["X"])):
+                    x = data_db[chrn]["X"][idx]
+                    y = data_db[chrn]["Y"][idx]
+                    data.append([x + off_set, y])
+                X = [v[0] for v in sorted(data)]
+                Y = [v[1] for v in sorted(data)]
+                with errstate(divide='ignore'):
+                    self.figure_content.plt.scatter(X, -log2(Y), s=3, color=colors[cidx % 2])
+                max_x = max(max_x, max(X))
+                cidx += 1
+                xticks.append(off_set + max(data_db[chrn]["X"]) / 2.)
+                xlabels.append(chrn)
+                off_set += max(data_db[chrn]["X"])
+            self.figure_content.plt.plot([0, max_x], [-log2(.05), -log2(.05)],
+                                         color='blue', linestyle=':', lw=1)
+            self.figure_content.plt.plot([0, max_x], [-log2(.01), -log2(.01)],
+                                         color='red', linestyle=':', lw=1)
+            self.figure_content.plt.xticks(xticks, xlabels, rotation=-45)
+            self.figure_content.plt.xlim(0, max_x)
         except Exception as e:
             return str(e)
-
         return "Success"
