@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import argparse
-from pop_cnv.worker.pipeline import Pipeline
+from pop_cnv.pipeline.pipeline import Pipeline
 
 
 class Main:
