@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>818</width>
-    <height>859</height>
+    <height>981</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,6 +26,7 @@
       <widget class="QGroupBox" name="grpSettings">
        <property name="font">
         <font>
+         <family>JetBrains Mono</family>
          <pointsize>14</pointsize>
          <bold>true</bold>
         </font>
@@ -42,8 +43,9 @@
              <widget class="QLabel" name="label_5">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>12</pointsize>
-                <bold>false</bold>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
@@ -55,6 +57,7 @@
              <widget class="QComboBox" name="cbox_wild_group">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>14</pointsize>
                 <bold>false</bold>
                </font>
@@ -78,8 +81,9 @@
              <widget class="QLabel" name="label_6">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>12</pointsize>
-                <bold>false</bold>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
@@ -91,6 +95,7 @@
              <widget class="QComboBox" name="cbox_threads">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>14</pointsize>
                 <bold>false</bold>
                </font>
@@ -105,12 +110,13 @@
              <widget class="QLabel" name="label_7">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>12</pointsize>
-                <bold>false</bold>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
-               <string>Work path:</string>
+               <string>Work path: </string>
               </property>
              </widget>
             </item>
@@ -118,6 +124,7 @@
              <widget class="QLineEdit" name="text_wrkdir">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>14</pointsize>
                 <bold>false</bold>
                </font>
@@ -131,7 +138,8 @@
              <widget class="QPushButton" name="btn_load_wrkdir">
               <property name="font">
                <font>
-                <pointsize>16</pointsize>
+                <family>JetBrains Mono</family>
+                <pointsize>14</pointsize>
                 <bold>false</bold>
                </font>
               </property>
@@ -151,6 +159,7 @@
       <widget class="QGroupBox" name="grpOutput">
        <property name="font">
         <font>
+         <family>JetBrains Mono</family>
          <pointsize>14</pointsize>
          <bold>true</bold>
         </font>
@@ -161,6 +170,13 @@
        <layout class="QGridLayout" name="gridLayout_5">
         <item row="0" column="0">
          <widget class="QTabWidget" name="tabOutput">
+          <property name="font">
+           <font>
+            <family>JetBrains Mono</family>
+            <pointsize>14</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="currentIndex">
            <number>0</number>
           </property>
@@ -180,8 +196,9 @@
                  <widget class="QLabel" name="label_9">
                   <property name="font">
                    <font>
+                    <family>JetBrains Mono</family>
                     <pointsize>12</pointsize>
-                    <bold>false</bold>
+                    <bold>true</bold>
                    </font>
                   </property>
                   <property name="text">
@@ -193,6 +210,7 @@
                  <widget class="QComboBox" name="cbox_pic_data_type">
                   <property name="font">
                    <font>
+                    <family>JetBrains Mono</family>
                     <pointsize>14</pointsize>
                     <bold>false</bold>
                    </font>
@@ -203,8 +221,9 @@
                  <widget class="QLabel" name="label_10">
                   <property name="font">
                    <font>
+                    <family>JetBrains Mono</family>
                     <pointsize>12</pointsize>
-                    <bold>false</bold>
+                    <bold>true</bold>
                    </font>
                   </property>
                   <property name="text">
@@ -216,6 +235,7 @@
                  <widget class="QComboBox" name="cbox_pic_smp">
                   <property name="font">
                    <font>
+                    <family>JetBrains Mono</family>
                     <pointsize>14</pointsize>
                     <bold>false</bold>
                    </font>
@@ -226,8 +246,9 @@
                  <widget class="QLabel" name="label_11">
                   <property name="font">
                    <font>
+                    <family>JetBrains Mono</family>
                     <pointsize>12</pointsize>
-                    <bold>false</bold>
+                    <bold>true</bold>
                    </font>
                   </property>
                   <property name="text">
@@ -239,6 +260,7 @@
                  <widget class="QComboBox" name="cbox_pic_chr">
                   <property name="font">
                    <font>
+                    <family>JetBrains Mono</family>
                     <pointsize>14</pointsize>
                     <bold>false</bold>
                    </font>
@@ -262,7 +284,8 @@
                  <widget class="QPushButton" name="btn_draw_pic">
                   <property name="font">
                    <font>
-                    <pointsize>16</pointsize>
+                    <family>JetBrains Mono</family>
+                    <pointsize>14</pointsize>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -275,7 +298,8 @@
                  <widget class="QPushButton" name="btn_export_pic">
                   <property name="font">
                    <font>
-                    <pointsize>16</pointsize>
+                    <family>JetBrains Mono</family>
+                    <pointsize>14</pointsize>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -306,8 +330,9 @@
                  <widget class="QLabel" name="label_12">
                   <property name="font">
                    <font>
+                    <family>JetBrains Mono</family>
                     <pointsize>12</pointsize>
-                    <bold>false</bold>
+                    <bold>true</bold>
                    </font>
                   </property>
                   <property name="text">
@@ -319,6 +344,7 @@
                  <widget class="QComboBox" name="cbox_table_data_type">
                   <property name="font">
                    <font>
+                    <family>JetBrains Mono</family>
                     <pointsize>14</pointsize>
                     <bold>false</bold>
                    </font>
@@ -329,8 +355,9 @@
                  <widget class="QLabel" name="label_14">
                   <property name="font">
                    <font>
+                    <family>JetBrains Mono</family>
                     <pointsize>12</pointsize>
-                    <bold>false</bold>
+                    <bold>true</bold>
                    </font>
                   </property>
                   <property name="text">
@@ -342,6 +369,7 @@
                  <widget class="QComboBox" name="cbox_table_smp">
                   <property name="font">
                    <font>
+                    <family>JetBrains Mono</family>
                     <pointsize>14</pointsize>
                     <bold>false</bold>
                    </font>
@@ -352,8 +380,9 @@
                  <widget class="QLabel" name="label_13">
                   <property name="font">
                    <font>
+                    <family>JetBrains Mono</family>
                     <pointsize>12</pointsize>
-                    <bold>false</bold>
+                    <bold>true</bold>
                    </font>
                   </property>
                   <property name="text">
@@ -365,6 +394,7 @@
                  <widget class="QComboBox" name="cbox_table_chr">
                   <property name="font">
                    <font>
+                    <family>JetBrains Mono</family>
                     <pointsize>14</pointsize>
                     <bold>false</bold>
                    </font>
@@ -388,7 +418,8 @@
                  <widget class="QPushButton" name="btn_preview_table">
                   <property name="font">
                    <font>
-                    <pointsize>16</pointsize>
+                    <family>JetBrains Mono</family>
+                    <pointsize>14</pointsize>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -401,7 +432,8 @@
                  <widget class="QPushButton" name="btn_export_table">
                   <property name="font">
                    <font>
-                    <pointsize>16</pointsize>
+                    <family>JetBrains Mono</family>
+                    <pointsize>14</pointsize>
                     <bold>false</bold>
                    </font>
                   </property>
@@ -425,6 +457,7 @@
       <widget class="QGroupBox" name="grpInput">
        <property name="font">
         <font>
+         <family>JetBrains Mono</family>
          <pointsize>14</pointsize>
          <bold>true</bold>
         </font>
@@ -447,12 +480,13 @@
               </property>
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>12</pointsize>
-                <bold>false</bold>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
-               <string>Genome:</string>
+               <string>Genome:     </string>
               </property>
              </widget>
             </item>
@@ -460,6 +494,7 @@
              <widget class="QLineEdit" name="text_genome_file_path">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>14</pointsize>
                 <bold>false</bold>
                </font>
@@ -479,8 +514,9 @@
               </property>
               <property name="font">
                <font>
-                <pointsize>16</pointsize>
-                <bold>false</bold>
+                <family>JetBrains Mono</family>
+                <pointsize>14</pointsize>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
@@ -496,12 +532,13 @@
              <widget class="QLabel" name="label_3">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>12</pointsize>
-                <bold>false</bold>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
-               <string>Seq depth:</string>
+               <string>Seq depth:  </string>
               </property>
              </widget>
             </item>
@@ -509,6 +546,7 @@
              <widget class="QLineEdit" name="text_seq_depth_file_path">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>14</pointsize>
                 <bold>false</bold>
                </font>
@@ -522,8 +560,9 @@
              <widget class="QPushButton" name="btn_load_seqdepth">
               <property name="font">
                <font>
-                <pointsize>16</pointsize>
-                <bold>false</bold>
+                <family>JetBrains Mono</family>
+                <pointsize>14</pointsize>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
@@ -539,12 +578,13 @@
              <widget class="QLabel" name="label_2">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>12</pointsize>
-                <bold>false</bold>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
-               <string>Mosdepth:</string>
+               <string>Mosdepth:   </string>
               </property>
              </widget>
             </item>
@@ -552,6 +592,7 @@
              <widget class="QLineEdit" name="text_mosdepth_folder_path">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>14</pointsize>
                 <bold>false</bold>
                </font>
@@ -565,8 +606,9 @@
              <widget class="QPushButton" name="btn_load_mosdepth">
               <property name="font">
                <font>
-                <pointsize>16</pointsize>
-                <bold>false</bold>
+                <family>JetBrains Mono</family>
+                <pointsize>14</pointsize>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
@@ -582,8 +624,9 @@
              <widget class="QLabel" name="label_8">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>12</pointsize>
-                <bold>false</bold>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
@@ -595,6 +638,7 @@
              <widget class="QLineEdit" name="text_smp_list_file_path">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>14</pointsize>
                 <bold>false</bold>
                </font>
@@ -608,8 +652,9 @@
              <widget class="QPushButton" name="btn_load_smp_list">
               <property name="font">
                <font>
-                <pointsize>16</pointsize>
-                <bold>false</bold>
+                <family>JetBrains Mono</family>
+                <pointsize>14</pointsize>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
@@ -625,12 +670,13 @@
              <widget class="QLabel" name="label_4">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>12</pointsize>
-                <bold>false</bold>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
-               <string>Gene list:</string>
+               <string>Gene list:  </string>
               </property>
              </widget>
             </item>
@@ -638,6 +684,7 @@
              <widget class="QLineEdit" name="text_gene_list_file_path">
               <property name="font">
                <font>
+                <family>JetBrains Mono</family>
                 <pointsize>14</pointsize>
                 <bold>false</bold>
                </font>
@@ -651,8 +698,9 @@
              <widget class="QPushButton" name="btn_load_gene_list">
               <property name="font">
                <font>
-                <pointsize>16</pointsize>
-                <bold>false</bold>
+                <family>JetBrains Mono</family>
+                <pointsize>14</pointsize>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
@@ -671,8 +719,9 @@
       <widget class="QPushButton" name="btn_run">
        <property name="font">
         <font>
+         <family>JetBrains Mono</family>
          <pointsize>16</pointsize>
-         <bold>false</bold>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -684,8 +733,9 @@
       <widget class="QPushButton" name="btn_check">
        <property name="font">
         <font>
+         <family>JetBrains Mono</family>
          <pointsize>16</pointsize>
-         <bold>false</bold>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">

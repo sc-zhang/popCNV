@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'popcnv_main_formzbXZQJ.ui'
+## Form generated from reading UI file 'popcnv_main_formSoqpec.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.6.2
 ##
@@ -26,7 +26,7 @@ class Ui_frmMain(object):
     def setupUi(self, frmMain):
         if not frmMain.objectName():
             frmMain.setObjectName(u"frmMain")
-        frmMain.resize(818, 859)
+        frmMain.resize(818, 981)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -39,6 +39,7 @@ class Ui_frmMain(object):
         self.grpSettings = QGroupBox(frmMain)
         self.grpSettings.setObjectName(u"grpSettings")
         font = QFont()
+        font.setFamilies([u"JetBrains Mono"])
         font.setPointSize(14)
         font.setBold(True)
         self.grpSettings.setFont(font)
@@ -51,8 +52,9 @@ class Ui_frmMain(object):
         self.label_5 = QLabel(self.grpSettings)
         self.label_5.setObjectName(u"label_5")
         font1 = QFont()
+        font1.setFamilies([u"JetBrains Mono"])
         font1.setPointSize(12)
-        font1.setBold(False)
+        font1.setBold(True)
         self.label_5.setFont(font1)
 
         self.horizontalLayout_7.addWidget(self.label_5)
@@ -60,6 +62,7 @@ class Ui_frmMain(object):
         self.cbox_wild_group = QComboBox(self.grpSettings)
         self.cbox_wild_group.setObjectName(u"cbox_wild_group")
         font2 = QFont()
+        font2.setFamilies([u"JetBrains Mono"])
         font2.setPointSize(14)
         font2.setBold(False)
         self.cbox_wild_group.setFont(font2)
@@ -100,10 +103,7 @@ class Ui_frmMain(object):
 
         self.btn_load_wrkdir = QPushButton(self.grpSettings)
         self.btn_load_wrkdir.setObjectName(u"btn_load_wrkdir")
-        font3 = QFont()
-        font3.setPointSize(16)
-        font3.setBold(False)
-        self.btn_load_wrkdir.setFont(font3)
+        self.btn_load_wrkdir.setFont(font2)
 
         self.horizontalLayout_6.addWidget(self.btn_load_wrkdir)
 
@@ -120,6 +120,7 @@ class Ui_frmMain(object):
         self.gridLayout_5.setObjectName(u"gridLayout_5")
         self.tabOutput = QTabWidget(self.grpOutput)
         self.tabOutput.setObjectName(u"tabOutput")
+        self.tabOutput.setFont(font)
         self.tab_pic = QWidget()
         self.tab_pic.setObjectName(u"tab_pic")
         self.gridLayout_3 = QGridLayout(self.tab_pic)
@@ -175,13 +176,13 @@ class Ui_frmMain(object):
 
         self.btn_draw_pic = QPushButton(self.tab_pic)
         self.btn_draw_pic.setObjectName(u"btn_draw_pic")
-        self.btn_draw_pic.setFont(font3)
+        self.btn_draw_pic.setFont(font2)
 
         self.horizontalLayout_8.addWidget(self.btn_draw_pic)
 
         self.btn_export_pic = QPushButton(self.tab_pic)
         self.btn_export_pic.setObjectName(u"btn_export_pic")
-        self.btn_export_pic.setFont(font3)
+        self.btn_export_pic.setFont(font2)
 
         self.horizontalLayout_8.addWidget(self.btn_export_pic)
 
@@ -245,13 +246,13 @@ class Ui_frmMain(object):
 
         self.btn_preview_table = QPushButton(self.tab_table)
         self.btn_preview_table.setObjectName(u"btn_preview_table")
-        self.btn_preview_table.setFont(font3)
+        self.btn_preview_table.setFont(font2)
 
         self.horizontalLayout_9.addWidget(self.btn_preview_table)
 
         self.btn_export_table = QPushButton(self.tab_table)
         self.btn_export_table.setObjectName(u"btn_export_table")
-        self.btn_export_table.setFont(font3)
+        self.btn_export_table.setFont(font2)
 
         self.horizontalLayout_9.addWidget(self.btn_export_table)
 
@@ -295,7 +296,7 @@ class Ui_frmMain(object):
         self.btn_load_genome.setObjectName(u"btn_load_genome")
         sizePolicy.setHeightForWidth(self.btn_load_genome.sizePolicy().hasHeightForWidth())
         self.btn_load_genome.setSizePolicy(sizePolicy)
-        self.btn_load_genome.setFont(font3)
+        self.btn_load_genome.setFont(font)
 
         self.horizontalLayout.addWidget(self.btn_load_genome)
 
@@ -317,7 +318,7 @@ class Ui_frmMain(object):
 
         self.btn_load_seqdepth = QPushButton(self.grpInput)
         self.btn_load_seqdepth.setObjectName(u"btn_load_seqdepth")
-        self.btn_load_seqdepth.setFont(font3)
+        self.btn_load_seqdepth.setFont(font)
 
         self.horizontalLayout_2.addWidget(self.btn_load_seqdepth)
 
@@ -339,7 +340,7 @@ class Ui_frmMain(object):
 
         self.btn_load_mosdepth = QPushButton(self.grpInput)
         self.btn_load_mosdepth.setObjectName(u"btn_load_mosdepth")
-        self.btn_load_mosdepth.setFont(font3)
+        self.btn_load_mosdepth.setFont(font)
 
         self.horizontalLayout_3.addWidget(self.btn_load_mosdepth)
 
@@ -361,7 +362,7 @@ class Ui_frmMain(object):
 
         self.btn_load_smp_list = QPushButton(self.grpInput)
         self.btn_load_smp_list.setObjectName(u"btn_load_smp_list")
-        self.btn_load_smp_list.setFont(font3)
+        self.btn_load_smp_list.setFont(font)
 
         self.horizontalLayout_4.addWidget(self.btn_load_smp_list)
 
@@ -383,7 +384,7 @@ class Ui_frmMain(object):
 
         self.btn_load_gene_list = QPushButton(self.grpInput)
         self.btn_load_gene_list.setObjectName(u"btn_load_gene_list")
-        self.btn_load_gene_list.setFont(font3)
+        self.btn_load_gene_list.setFont(font)
 
         self.horizontalLayout_5.addWidget(self.btn_load_gene_list)
 
@@ -395,6 +396,10 @@ class Ui_frmMain(object):
 
         self.btn_run = QPushButton(frmMain)
         self.btn_run.setObjectName(u"btn_run")
+        font3 = QFont()
+        font3.setFamilies([u"JetBrains Mono"])
+        font3.setPointSize(16)
+        font3.setBold(True)
         self.btn_run.setFont(font3)
 
         self.gridLayout_6.addWidget(self.btn_run, 3, 0, 1, 1)
@@ -420,7 +425,7 @@ class Ui_frmMain(object):
         self.grpSettings.setTitle(QCoreApplication.translate("frmMain", u"Settings", None))
         self.label_5.setText(QCoreApplication.translate("frmMain", u"Wild group:", None))
         self.label_6.setText(QCoreApplication.translate("frmMain", u"Threads:", None))
-        self.label_7.setText(QCoreApplication.translate("frmMain", u"Work path:", None))
+        self.label_7.setText(QCoreApplication.translate("frmMain", u"Work path: ", None))
         self.text_wrkdir.setText("")
         self.btn_load_wrkdir.setText(QCoreApplication.translate("frmMain", u"...", None))
         self.grpOutput.setTitle(QCoreApplication.translate("frmMain", u"Output", None))
@@ -439,19 +444,19 @@ class Ui_frmMain(object):
         self.tabOutput.setTabText(self.tabOutput.indexOf(self.tab_table),
                                   QCoreApplication.translate("frmMain", u"Tables", None))
         self.grpInput.setTitle(QCoreApplication.translate("frmMain", u"Input files", None))
-        self.label.setText(QCoreApplication.translate("frmMain", u"Genome:", None))
+        self.label.setText(QCoreApplication.translate("frmMain", u"Genome:     ", None))
         self.text_genome_file_path.setText("")
         self.btn_load_genome.setText(QCoreApplication.translate("frmMain", u"...", None))
-        self.label_3.setText(QCoreApplication.translate("frmMain", u"Seq depth:", None))
+        self.label_3.setText(QCoreApplication.translate("frmMain", u"Seq depth:  ", None))
         self.text_seq_depth_file_path.setText("")
         self.btn_load_seqdepth.setText(QCoreApplication.translate("frmMain", u"...", None))
-        self.label_2.setText(QCoreApplication.translate("frmMain", u"Mosdepth:", None))
+        self.label_2.setText(QCoreApplication.translate("frmMain", u"Mosdepth:   ", None))
         self.text_mosdepth_folder_path.setText("")
         self.btn_load_mosdepth.setText(QCoreApplication.translate("frmMain", u"...", None))
         self.label_8.setText(QCoreApplication.translate("frmMain", u"Sample list:", None))
         self.text_smp_list_file_path.setText("")
         self.btn_load_smp_list.setText(QCoreApplication.translate("frmMain", u"...", None))
-        self.label_4.setText(QCoreApplication.translate("frmMain", u"Gene list:", None))
+        self.label_4.setText(QCoreApplication.translate("frmMain", u"Gene list:  ", None))
         self.text_gene_list_file_path.setText("")
         self.btn_load_gene_list.setText(QCoreApplication.translate("frmMain", u"...", None))
         self.btn_run.setText(QCoreApplication.translate("frmMain", u"Run", None))
