@@ -208,6 +208,12 @@
                 </item>
                 <item>
                  <widget class="QComboBox" name="cbox_pic_data_type">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>JetBrains Mono</family>
@@ -354,6 +360,12 @@
                 </item>
                 <item>
                  <widget class="QComboBox" name="cbox_table_data_type">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>JetBrains Mono</family>

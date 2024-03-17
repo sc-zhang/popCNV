@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'popcnv_main_formtByAzU.ui'
+## Form generated from reading UI file 'popcnv_main_formFEiWUd.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.6.2
 ##
@@ -142,6 +142,11 @@ class Ui_frmMain(object):
 
         self.cbox_pic_data_type = QComboBox(self.tab_pic)
         self.cbox_pic_data_type.setObjectName(u"cbox_pic_data_type")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.cbox_pic_data_type.sizePolicy().hasHeightForWidth())
+        self.cbox_pic_data_type.setSizePolicy(sizePolicy1)
         self.cbox_pic_data_type.setFont(font2)
 
         self.horizontalLayout_8.addWidget(self.cbox_pic_data_type)
@@ -154,9 +159,6 @@ class Ui_frmMain(object):
 
         self.cbox_pic_smp = QComboBox(self.tab_pic)
         self.cbox_pic_smp.setObjectName(u"cbox_pic_smp")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.cbox_pic_smp.sizePolicy().hasHeightForWidth())
         self.cbox_pic_smp.setSizePolicy(sizePolicy1)
         self.cbox_pic_smp.setFont(font2)
@@ -219,6 +221,8 @@ class Ui_frmMain(object):
 
         self.cbox_table_data_type = QComboBox(self.tab_table)
         self.cbox_table_data_type.setObjectName(u"cbox_table_data_type")
+        sizePolicy1.setHeightForWidth(self.cbox_table_data_type.sizePolicy().hasHeightForWidth())
+        self.cbox_table_data_type.setSizePolicy(sizePolicy1)
         self.cbox_table_data_type.setFont(font2)
 
         self.horizontalLayout_9.addWidget(self.cbox_table_data_type)

@@ -29,8 +29,12 @@ class GPopCNV(QWidget):
         self.__threads = 0
         self.__chr_set = set()
 
+        # use QThread avoid main form freeze
         self.__worker = Worker()
         self.__worker_thread = QThread()
+
+        # data types
+        self.__data_type = ["Read depth", "Copy number", "Rounded copy number", "RFD"]
 
         self.__init_ui()
 
@@ -171,10 +175,16 @@ class GPopCNV(QWidget):
         self.ui.grpOutput.setEnabled(True)
 
         # Set output options
-        self.ui.cbox_pic_smp.addItems(self.__grp_db.keys())
-        self.ui.cbox_table_smp.addItems(self.__grp_db.keys())
-        self.ui.cbox_pic_chr.addItems(sorted(self.__chr_set))
-        self.ui.cbox_table_chr.addItems(sorted(self.__chr_set))
+        self.ui.cbox_pic_data_type.addItems(self.__data_type)
+        self.ui.cbox_table_data_type.addItems(self.__data_type)
+        sample_list = ["All"]
+        sample_list.extend(sorted(self.__grp_db))
+        self.ui.cbox_pic_smp.addItems(sample_list)
+        self.ui.cbox_table_smp.addItems(sample_list)
+        chr_list = ["All"]
+        chr_list.extend(sorted(self.__chr_set))
+        self.ui.cbox_pic_chr.addItems(chr_list)
+        self.ui.cbox_table_chr.addItems(chr_list)
 
     def __run_popcnv(self):
         # Check workdir available
