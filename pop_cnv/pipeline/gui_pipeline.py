@@ -69,6 +69,7 @@ class GPopCNV(QWidget):
         self.ui.btn_load_wrkdir.clicked.connect(self.__get_work_path)
 
         self.ui.btn_draw_pic.clicked.connect(self.__draw_pic)
+        self.ui.btn_export_pic.clicked.connect(self.__export_pic)
         self.ui.btn_preview_table.clicked.connect(self.__preview_data)
         self.ui.btn_export_table.clicked.connect(self.__export_data)
 
@@ -362,3 +363,13 @@ class GPopCNV(QWidget):
         self.__run_signal.emit(1)
         self.__draw_pic_worker_thread.start()
 
+    def __export_pic(self):
+        export_file_path = QFileDialog.getSaveFileName(self, "Export Picture",
+                                                       "%s.pdf" % self.ui.cbox_table_data_type.currentText(),
+                                                       "pdf(*.pdf)")[0]
+        if export_file_path and self.__draw_pic_worker.pic.figure_content:
+            try:
+                self.__draw_pic_worker.pic.figure_content.plt.savefig(export_file_path, bbox_inches='tight')
+                QMessageBox.information(self, "Export Picture", "Exported Success")
+            except Exception as e:
+                QMessageBox.critical(self, "Export Picture", "Failed to export")
