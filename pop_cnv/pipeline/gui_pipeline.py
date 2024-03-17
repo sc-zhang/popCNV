@@ -153,7 +153,11 @@ class GPopCNV(QWidget):
 
     def __popcnv_completed(self, v):
         self.__worker_thread.quit()
+        # Enable controls before popcnv finished
         self.ui.btn_run.setEnabled(True)
+        self.ui.btn_check.setEnabled(True)
+        self.ui.grpInput.setEnabled(True)
+        self.ui.grpSettings.setEnabled(True)
         self.ui.grpOutput.setEnabled(True)
 
     def __run_popcnv(self):
@@ -165,7 +169,12 @@ class GPopCNV(QWidget):
             QMessageBox.critical(self, "Running error", "Work directory not found")
             return
 
+        # Disable controls before popcnv finished
         self.ui.btn_run.setEnabled(False)
+        self.ui.btn_check.setEnabled(False)
+        self.ui.grpInput.setEnabled(False)
+        self.ui.grpSettings.setEnabled(False)
+
         self.__win_size = self.__get_win()
         self.__worker.progress.connect(self.__notify_with_title)
         self.__worker.completed.connect(self.__popcnv_completed)
