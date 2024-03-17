@@ -74,6 +74,7 @@ class GPopCNV(QWidget):
 
         # Set combobox connects
         self.ui.cbox_table_data_type.currentTextChanged.connect(self.__modify_table_smp_cbox)
+        self.ui.cbox_pic_data_type.currentTextChanged.connect(self.__modify_pic_smp_cbox)
 
         self.ui.btn_check.clicked.connect(self.__check_data)
         self.ui.btn_run.clicked.connect(self.__run_popcnv)
@@ -121,6 +122,20 @@ class GPopCNV(QWidget):
             sample_list = ["All"]
             sample_list.extend(sorted(self.__grp_db))
             self.ui.cbox_table_smp.addItems(sample_list)
+
+    def __modify_pic_smp_cbox(self):
+        self.ui.cbox_pic_smp.clear()
+        if self.ui.cbox_pic_data_type.currentText() == "RFD":
+            grp_list = ["All"]
+            grp_set = set(self.__grp_db[_] for _ in self.__grp_db)
+            for grp in sorted(grp_set):
+                if grp != self.__wild_group:
+                    grp_list.append(grp)
+            self.ui.cbox_pic_smp.addItems(grp_list)
+        else:
+            sample_list = ["All"]
+            sample_list.extend(sorted(self.__grp_db))
+            self.ui.cbox_pic_smp.addItems(sample_list)
 
     def __notify_with_title(self, info=""):
         if info:
@@ -209,14 +224,16 @@ class GPopCNV(QWidget):
         self.ui.grpOutput.setEnabled(True)
 
         # Set output options
+        self.ui.cbox_pic_data_type.clear()
         self.ui.cbox_pic_data_type.addItems(self.__data_type)
+        self.ui.cbox_table_data_type.clear()
         self.ui.cbox_table_data_type.addItems(self.__data_type)
-        sample_list = ["All"]
-        sample_list.extend(sorted(self.__grp_db))
-        self.ui.cbox_pic_smp.addItems(sample_list)
+
         chr_list = ["All"]
         chr_list.extend(sorted(self.__chr_set))
+        self.ui.cbox_pic_chr.clear()
         self.ui.cbox_pic_chr.addItems(chr_list)
+        self.ui.cbox_table_chr.clear()
         self.ui.cbox_table_chr.addItems(chr_list)
 
     def __run_popcnv(self):

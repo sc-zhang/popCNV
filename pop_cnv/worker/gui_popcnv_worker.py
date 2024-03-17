@@ -269,6 +269,8 @@ class DataPreviewWorker(QObject):
                         for smp in rfd_loader.rfd_db[gn]:
                             self.table_data.append([smp, gn,
                                                     rfd_loader.rfd_db[gn][smp][0], rfd_loader.rfd_db[gn][smp][1]])
+                del rfd_loader.rfd_db
+                collect()
             else:
                 full_fn = path.join(self.__data_file_path, "%s.list" % self.__sample_name)
                 rfd_loader = loader.RFDLoader()
@@ -320,6 +322,7 @@ class PicDrawWorker(QObject):
         self.__chr_name = chr_name
 
     def run(self, v):
+        stat = ""
         self.__plot_data = {}
         if path.isfile(self.__data_file_path):
             self.progress.emit("Loading %s" % self.__data_file_path)
@@ -358,7 +361,7 @@ class PicDrawWorker(QObject):
                                 self.__plot_data[smp][chrn]["Y"].append(bed_loader.bed_db[smp][key])
                 del bed_loader.bed_db
                 collect()
-            self.pic.gene_line_graph(self.__plot_data)
+            stat = self.pic.gene_line_graph(self.__plot_data)
         else:
             gene_loader = loader.GeneLoader()
             gene_loader.load(self.__gene_list_file_path)
@@ -376,7 +379,10 @@ class PicDrawWorker(QObject):
                             if chrn not in self.__plot_data[smp]:
                                 self.__plot_data[smp][chrn] = {"X": [], "Y": []}
                             self.__plot_data[smp][chrn]["X"].append(gene_loader.bed_db[gn][1])
-                            self.__plot_data[smp][chrn]["Y"].append(rfd_loader.rfd_db[gn][1])
+                            self.__plot_data[smp][chrn]["Y"].append(rfd_loader.rfd_db[gn][smp][1])
+                del rfd_loader.rfd_db
+                collect()
+                stat = self.pic.gene_manhattan_graph(self.__plot_data, is_single=False)
             else:
                 full_fn = path.join(self.__data_file_path, "%s.list" % self.__sample_name)
                 rfd_loader = loader.RFDLoader()
@@ -392,6 +398,9 @@ class PicDrawWorker(QObject):
                         self.__plot_data[self.__sample_name][chrn]["Y"].append(rfd_loader.rfd_db[gn][1])
                 del rfd_loader.rfd_db
                 collect()
-
-        self.progress.emit("Done")
+                stat = self.pic.gene_manhattan_graph(self.__plot_data, is_single=True)
+        if stat == "Success":
+            self.progress.emit("Done")
+        else:
+            self.progress.emit(stat)
         self.completed.emit(1)
