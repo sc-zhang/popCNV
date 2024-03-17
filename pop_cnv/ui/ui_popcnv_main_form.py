@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'popcnv_main_formSoqpec.ui'
+## Form generated from reading UI file 'popcnv_main_formtByAzU.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.6.2
 ##
@@ -26,7 +26,7 @@ class Ui_frmMain(object):
     def setupUi(self, frmMain):
         if not frmMain.objectName():
             frmMain.setObjectName(u"frmMain")
-        frmMain.resize(818, 981)
+        frmMain.resize(960, 1064)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -154,6 +154,11 @@ class Ui_frmMain(object):
 
         self.cbox_pic_smp = QComboBox(self.tab_pic)
         self.cbox_pic_smp.setObjectName(u"cbox_pic_smp")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.cbox_pic_smp.sizePolicy().hasHeightForWidth())
+        self.cbox_pic_smp.setSizePolicy(sizePolicy1)
         self.cbox_pic_smp.setFont(font2)
 
         self.horizontalLayout_8.addWidget(self.cbox_pic_smp)
@@ -166,6 +171,8 @@ class Ui_frmMain(object):
 
         self.cbox_pic_chr = QComboBox(self.tab_pic)
         self.cbox_pic_chr.setObjectName(u"cbox_pic_chr")
+        sizePolicy1.setHeightForWidth(self.cbox_pic_chr.sizePolicy().hasHeightForWidth())
+        self.cbox_pic_chr.setSizePolicy(sizePolicy1)
         self.cbox_pic_chr.setFont(font2)
 
         self.horizontalLayout_8.addWidget(self.cbox_pic_chr)
@@ -224,6 +231,8 @@ class Ui_frmMain(object):
 
         self.cbox_table_smp = QComboBox(self.tab_table)
         self.cbox_table_smp.setObjectName(u"cbox_table_smp")
+        sizePolicy1.setHeightForWidth(self.cbox_table_smp.sizePolicy().hasHeightForWidth())
+        self.cbox_table_smp.setSizePolicy(sizePolicy1)
         self.cbox_table_smp.setFont(font2)
 
         self.horizontalLayout_9.addWidget(self.cbox_table_smp)
@@ -236,6 +245,8 @@ class Ui_frmMain(object):
 
         self.cbox_table_chr = QComboBox(self.tab_table)
         self.cbox_table_chr.setObjectName(u"cbox_table_chr")
+        sizePolicy1.setHeightForWidth(self.cbox_table_chr.sizePolicy().hasHeightForWidth())
+        self.cbox_table_chr.setSizePolicy(sizePolicy1)
         self.cbox_table_chr.setFont(font2)
 
         self.horizontalLayout_9.addWidget(self.cbox_table_chr)
@@ -277,11 +288,11 @@ class Ui_frmMain(object):
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.label = QLabel(self.grpInput)
         self.label.setObjectName(u"label")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy1)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy2)
         self.label.setFont(font1)
 
         self.horizontalLayout.addWidget(self.label)
@@ -432,7 +443,7 @@ class Ui_frmMain(object):
         self.label_9.setText(QCoreApplication.translate("frmMain", u"Type:", None))
         self.label_10.setText(QCoreApplication.translate("frmMain", u"Sample:", None))
         self.label_11.setText(QCoreApplication.translate("frmMain", u"Chr:", None))
-        self.btn_draw_pic.setText(QCoreApplication.translate("frmMain", u"Draw", None))
+        self.btn_draw_pic.setText(QCoreApplication.translate("frmMain", u"DrawPic", None))
         self.btn_export_pic.setText(QCoreApplication.translate("frmMain", u"Export", None))
         self.tabOutput.setTabText(self.tabOutput.indexOf(self.tab_pic),
                                   QCoreApplication.translate("frmMain", u"Pictures", None))

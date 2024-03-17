@@ -27,6 +27,7 @@ class GPopCNV(QWidget):
         self.__win_size = 0
         self.__wrkdir = ""
         self.__threads = 0
+        self.__chr_set = set()
 
         self.__worker = Worker()
         self.__worker_thread = QThread()
@@ -121,6 +122,9 @@ class GPopCNV(QWidget):
         self.ui.cbox_threads.addItems(threads_list)
         self.ui.cbox_threads.setCurrentText(threads_list[-1])
 
+        # Get chromosomes list
+        self.__get_chr_ids()
+
         # Load sample list
         self.__notify_with_title("Loading samples")
         try:
@@ -151,6 +155,12 @@ class GPopCNV(QWidget):
                     ep = int(data[2])
                     return ep - sp
 
+    def __get_chr_ids(self):
+        with open(self.__gene_list_file) as fin:
+            for line in fin:
+                data = line.strip().split()
+                self.__chr_set.add(data[0])
+
     def __popcnv_completed(self, v):
         self.__worker_thread.quit()
         # Enable controls before popcnv finished
@@ -159,6 +169,12 @@ class GPopCNV(QWidget):
         self.ui.grpInput.setEnabled(True)
         self.ui.grpSettings.setEnabled(True)
         self.ui.grpOutput.setEnabled(True)
+
+        # Set output options
+        self.ui.cbox_pic_smp.addItems(self.__grp_db.keys())
+        self.ui.cbox_table_smp.addItems(self.__grp_db.keys())
+        self.ui.cbox_pic_chr.addItems(sorted(self.__chr_set))
+        self.ui.cbox_table_chr.addItems(sorted(self.__chr_set))
 
     def __run_popcnv(self):
         # Check workdir available

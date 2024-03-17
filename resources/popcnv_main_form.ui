@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>818</width>
-    <height>981</height>
+    <width>960</width>
+    <height>1064</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -233,6 +233,12 @@
                 </item>
                 <item>
                  <widget class="QComboBox" name="cbox_pic_smp">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>JetBrains Mono</family>
@@ -258,6 +264,12 @@
                 </item>
                 <item>
                  <widget class="QComboBox" name="cbox_pic_chr">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>JetBrains Mono</family>
@@ -290,7 +302,7 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Draw</string>
+                   <string>DrawPic</string>
                   </property>
                  </widget>
                 </item>
@@ -367,6 +379,12 @@
                 </item>
                 <item>
                  <widget class="QComboBox" name="cbox_table_smp">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>JetBrains Mono</family>
@@ -392,6 +410,12 @@
                 </item>
                 <item>
                  <widget class="QComboBox" name="cbox_table_chr">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>JetBrains Mono</family>
