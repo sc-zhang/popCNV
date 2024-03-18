@@ -3,3 +3,6 @@
 .idea
 *.pyc
 __pycache__
+*.build
+*.dist
+*.exe

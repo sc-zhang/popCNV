@@ -55,3 +55,16 @@ options:
 
 
 ## popCNV GUI version
+
+### Installation
+Download executable file in releases.
+
+### Usage
+**Notice:** you need run <kbd>mosdepth</kbd> with same window size for all your samples, and get sequence depth of all samples manually.  
+```sh
+# For windows user, just run gpopCNV.exe, for other platform like linux and macOS,
+# use command below to run gpopCNV
+python3 gpopCNV.py
+```
+The main form is like below:
+![](images/main_form.png)
