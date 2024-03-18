@@ -11,7 +11,9 @@ import gzip
 
 
 class GPopCNV(QWidget):
-    __run_signal = Signal(list)
+    __run_signal = Signal(int)
+    __preview_pic_signal = Signal(int)
+    __preview_table_signal = Signal(int)
 
     def __init__(self):
         super(GPopCNV, self).__init__()
@@ -40,6 +42,9 @@ class GPopCNV(QWidget):
 
         self.__data_preview_worker = DataPreviewWorker()
         self.__data_preview_worker_thread = QThread()
+
+        self.__pic_export_filename = ""
+        self.__table_export_filename = ""
 
         # data types
         self.__data_type = ["Read depth", "Copy number",
@@ -271,6 +276,8 @@ class GPopCNV(QWidget):
         self.__popcnv_worker_thread.start()
 
     def __data_preview_completed(self):
+        self.__draw_pic_worker_thread.quit()
+        # Enable controls
         self.ui.btn_run.setEnabled(True)
         self.ui.btn_check.setEnabled(True)
         self.ui.grpInput.setEnabled(True)
@@ -284,6 +291,7 @@ class GPopCNV(QWidget):
         chr_name = self.ui.cbox_table_chr.currentText()
         data_file_path = path.join(self.__wrkdir, self.__data_file_db[data_type])
 
+        self.__table_export_filename = "%s_%s_%s.csv" % (data_type, sample_name, chr_name)
         # Disable controls before popcnv finished
         self.ui.btn_run.setEnabled(False)
         self.ui.btn_check.setEnabled(False)
@@ -300,14 +308,14 @@ class GPopCNV(QWidget):
                                              self.__gene_list_file,
                                              sample_name,
                                              chr_name)
-        self.__run_signal.connect(self.__data_preview_worker.run)
+        self.__preview_table_signal.connect(self.__data_preview_worker.run)
         self.__data_preview_worker.moveToThread(self.__data_preview_worker_thread)
-        self.__run_signal.emit(1)
+        self.__preview_table_signal.emit(1)
         self.__data_preview_worker_thread.start()
 
     def __export_data(self):
         export_file_path = QFileDialog.getSaveFileName(self, "Export Data",
-                                                       "%s.csv" % self.ui.cbox_table_data_type.currentText(),
+                                                       self.__table_export_filename,
                                                        "csv(*.csv)")[0]
         if export_file_path and self.__data_preview_worker.table_data:
             try:
@@ -320,6 +328,7 @@ class GPopCNV(QWidget):
                 QMessageBox.critical(self, "Export Data", "Failed to export")
 
     def __draw_pic_completed(self, v):
+        self.__draw_pic_worker_thread.quit()
         # Draw picture
         if not self.graph_scene:
             self.graph_scene = ControlGraphicsScene()
@@ -342,6 +351,7 @@ class GPopCNV(QWidget):
         chr_name = self.ui.cbox_pic_chr.currentText()
         data_file_path = path.join(self.__wrkdir, self.__data_file_db[data_type])
 
+        self.__pic_export_filename = "%s_%s_%s.pdf" % (data_type, sample_name, chr_name)
         # Disable controls before popcnv finished
         self.ui.btn_run.setEnabled(False)
         self.ui.btn_check.setEnabled(False)
@@ -358,14 +368,14 @@ class GPopCNV(QWidget):
                                          self.__gene_list_file,
                                          sample_name,
                                          chr_name)
-        self.__run_signal.connect(self.__draw_pic_worker.run)
+        self.__preview_pic_signal.connect(self.__draw_pic_worker.run)
         self.__draw_pic_worker.moveToThread(self.__draw_pic_worker_thread)
-        self.__run_signal.emit(1)
+        self.__preview_pic_signal.emit(1)
         self.__draw_pic_worker_thread.start()
 
     def __export_pic(self):
         export_file_path = QFileDialog.getSaveFileName(self, "Export Picture",
-                                                       "%s.pdf" % self.ui.cbox_pic_data_type.currentText(),
+                                                       self.__pic_export_filename,
                                                        "pdf(*.pdf)")[0]
         if export_file_path and self.__draw_pic_worker.pic.figure_content:
             try:
