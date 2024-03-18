@@ -178,6 +178,7 @@ class GPopCNV(QWidget):
 
         # Set threads list
         threads_list = [str(_) for _ in range(1, cpu_count() + 1)]
+        self.ui.cbox_threads.clear()
         self.ui.cbox_threads.addItems(threads_list)
         self.ui.cbox_threads.setCurrentText(threads_list[-1])
 
@@ -191,6 +192,7 @@ class GPopCNV(QWidget):
             grp_loader.load(self.__smp_file)
             self.__grp_db = grp_loader.grp_db
             grp_set = set(self.__grp_db[_] for _ in self.__grp_db)
+            self.ui.cbox_wild_group.clear()
             self.ui.cbox_wild_group.addItems(grp_set)
             self.__notify_with_title()
         except Exception as e:
