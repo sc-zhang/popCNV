@@ -1,4 +1,4 @@
-from pathos.multiprocessing import Pool
+from pathos import multiprocessing
 from pop_cnv.io.loader import FastaLoader, GCLoader
 from pop_cnv.io.message import Message
 from pop_cnv.worker.generator import BIN
@@ -42,7 +42,7 @@ class GC:
         self.__fa_db = FastaLoader.load(genome_file)
         self.__bins = BIN.generate(window_size, self.__fa_db)
 
-        pool = Pool(processes=threads)
+        pool = multiprocessing.Pool(processes=threads)
         res = []
         for chrn in self.__fa_db:
             r = pool.apply_async(self.__sub_stat, args=(self.__bins[chrn], self.__fa_db[chrn], chrn, ))
@@ -79,7 +79,7 @@ class SeqDepth:
         for _ in fa_db:
             genome_size += len(fa_db[_])
 
-        pool = Pool(processes=threads)
+        pool = multiprocessing.Pool(processes=threads)
         res = []
         for bam in listdir(bam_path):
             if bam.split('.')[-1].lower() != 'bam':
@@ -108,7 +108,7 @@ class BamDepth:
         runner.run()
 
     def run(self, bam_path, bin_size, out_dir, threads):
-        pool = Pool(processes=threads)
+        pool = multiprocessing.Pool(processes=threads)
         for bam in listdir(bam_path):
             if bam.split('.')[-1].lower() != 'bam':
                 continue
@@ -140,7 +140,7 @@ class Norm:
                 fout.write("%s\t%d\t%d\t%s\n" % (chrn, sp, ep, str(rd_db[_])))
 
     def norm(self, mos_path, sample_depth_db, threads):
-        pool = Pool(processes=threads)
+        pool = multiprocessing.Pool(processes=threads)
         smp_list = []
         for fn in listdir(mos_path):
             if not fn.endswith(".regions.bed.gz"):
@@ -211,7 +211,7 @@ class CN:
                 fout.write("%s\t%d\t%d\t%s\n" % (chrn, sp, ep, str(cn_db[_])))
 
     def convert(self, gc_db, rd_db, threads):
-        pool = Pool(processes=threads)
+        pool = multiprocessing.Pool(processes=threads)
         for smp in rd_db:
             rd_tmp_file = '__tmp__%s.rd' % smp
             if not path.exists(rd_tmp_file):
