@@ -85,6 +85,9 @@ class GPopCNV(QWidget):
         self.ui.btn_check.clicked.connect(self.__check_data)
         self.ui.btn_run.clicked.connect(self.__run_popcnv)
 
+        # Enable sort tableview by click column header
+        self.ui.tablePreview.setSortingEnabled(True)
+
     def __get_genome_path(self):
         genome_file_path = QFileDialog.getOpenFileName(self, "Load Genome")[0]
         if genome_file_path:

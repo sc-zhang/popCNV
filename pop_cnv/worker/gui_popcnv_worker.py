@@ -1,4 +1,4 @@
-from PySide6.QtCore import QObject, Signal
+from PySide6.QtCore import QObject, Signal, QSortFilterProxyModel
 from os import path, makedirs
 from pop_cnv.worker import calculator
 from pop_cnv.io import loader, writer
@@ -282,7 +282,10 @@ class DataPreviewWorker(QObject):
                 del rfd_loader.rfd_db
                 collect()
         self.__model = TableModel(self.table_data, self.header_data)
-        self.__parent_form.ui.tablePreview.setModel(self.__model)
+        proxymodel = QSortFilterProxyModel()
+        proxymodel.setSourceModel(self.__model)
+
+        self.__parent_form.ui.tablePreview.setModel(proxymodel)
         self.__parent_form.ui.tablePreview.resizeColumnsToContents()
 
         self.progress.emit("Done")
