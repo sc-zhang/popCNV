@@ -213,7 +213,7 @@ class CN:
             if _ not in sub_rd_db:
                 Message().error("{} could not found in GC database, "
                                 "genome could not match bam reference, exiting...".format(_))
-                exit(-1)
+                raise KeyError
             rd = sub_rd_db[_]
             if gc not in conv_gc_db:
                 conv_gc_db[gc] = []
