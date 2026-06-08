@@ -1,0 +1,5 @@
+pysam
+pathos>=0.3.0
+scipy
+numpy
+matplotlib
