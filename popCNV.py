@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import argparse
 from pop_cnv.pipeline.pipeline import Pipeline
 
