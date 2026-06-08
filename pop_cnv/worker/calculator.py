@@ -117,14 +117,23 @@ class BamDepth:
 
     def run(self, bam_path, bin_size, out_dir, threads):
         pool = multiprocessing.Pool(processes=threads)
+        res = []
         for bam in listdir(bam_path):
             if bam.split('.')[-1].lower() != 'bam':
                 continue
             smp = bam.split('.')[0]
             bam_file = path.join(bam_path, bam)
-            pool.apply_async(self.__sub_run, args=(smp, bam_file, bin_size, out_dir,))
+            r = pool.apply_async(self.__sub_run, args=(smp, bam_file, bin_size, out_dir,))
+            res.append(r)
         pool.close()
         pool.join()
+
+        for r in res:
+            try:
+                r.get()
+            except Exception as e:
+                Message().error(repr(e))
+                exit(-1)
 
 
 class Norm:
