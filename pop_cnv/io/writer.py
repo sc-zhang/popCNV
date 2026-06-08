@@ -7,6 +7,7 @@ class GCWriter:
     This class is used for writing files like below:
     Sample  Chromosome    Start_position  End_position    value
     """
+
     def __init__(self, gc_file):
         self.gc_file = gc_file
 
@@ -23,6 +24,7 @@ class BEDWriter:
     This class is used for writing files like below:
     Sample  Chromosome    Start_position  End_position    value
     """
+
     def __init__(self, bed_file):
         self.bed_file = bed_file
 
@@ -40,6 +42,7 @@ class DepthWriter:
     This class is used for writing sequence depth file which contain two columns:
     Sample  depth
     """
+
     def __init__(self, depth_file):
         self.depth_file = depth_file
 
@@ -54,6 +57,7 @@ class GeneCNWriter:
     This class is used for writing gc file like below:
     Gene    sample1_cn  sample2_cn  sample3_cn ...
     """
+
     def __init__(self, gene_cn_file):
         self.gene_cn_file = gene_cn_file
 
@@ -86,6 +90,7 @@ class TopRFDWriter:
     This class is used for writing gc file like below:
     Gene    RFD p-value
     """
+
     def __init__(self, out_dir):
         self.out_dir = out_dir
 
@@ -93,12 +98,12 @@ class TopRFDWriter:
         gene_rfd_db = {}
         for grp in rfd_db:
             cnt = 0
-            with open(path.join(self.out_dir, grp+".list"), 'w') as fout:
+            with open(path.join(self.out_dir, grp + ".list"), 'w') as fout:
                 for RFD, p, gn in sorted(rfd_db[grp], reverse=True):
                     if gn not in gene_rfd_db:
                         gene_rfd_db[gn] = {}
                     gene_rfd_db[gn][grp] = [RFD, p]
-                    if cnt < len(rfd_db[grp])*.05 and p < .05:
+                    if cnt < len(rfd_db[grp]) * .05 and p < .05:
                         fout.write("%s\t%f\t%f\n" % (gn, RFD, p))
                         cnt += 1
 
@@ -112,7 +117,7 @@ class TopRFDWriter:
                 fout.write(gn)
                 for grp in sorted(rfd_db):
                     if grp in gene_rfd_db[gn]:
-                        fout.write("\t%f,% f" % (gene_rfd_db[gn][grp][0], gene_rfd_db[gn][grp][1]))
+                        fout.write("\t%f,%f" % (gene_rfd_db[gn][grp][0], gene_rfd_db[gn][grp][1]))
                     else:
                         fout.write("\tnan,nan")
                     fout.write("\n")
