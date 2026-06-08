@@ -4,30 +4,36 @@ This software is used for calculating copy number of genes, and get top 5% genes
 
 ## popCNV CLI version
 
-###  Dependencies
-
-Python modules:
- - numpy
- - scipy
- - pysam
- - pathos
+### Dependencies
 
 Software:
- - [mosdepth](https://github.com/brentp/mosdepth)
+
+- [mosdepth](https://github.com/brentp/mosdepth)
+- Python 3.7+
+
+Python modules:
+
+- numpy
+- scipy
+- pysam
+- pathos
 
 ### Installation
 
 ```sh
 cd /path/to/install
 git clone https://github.com/sc-zhang/popCNV.git
-cd popCNV.py
+cd popCNV
+pip install -r requirements.txt
 chmod +x popCNV.py
 echo 'export PATH=/path/to/install/popCNV.py:$PATH' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
 ### Usage
+
 **Notice:** you need add <kbd>mosdepth</kbd> to your <kbd>PATH</kbd>
+
 ```sh
 usage: popCNV.py [-h] -g GENOME -b BAM [-s WIN_SIZE] -l LIST -w WORKDIR --group GROUP --wild WILD [-t THREADS]
 
@@ -48,6 +54,7 @@ options:
 ```
 
 ### Results
+
 | File/Directory        | Description                                                                                                                                                                                                                                                       |
 |-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **06.genes.round.cn** | Copy number of genes in all groups                                                                                                                                                                                                                                |
@@ -59,14 +66,16 @@ options:
 ## popCNV GUI version
 
 ### Installation
+
 Download executable file in releases.
 
 ### Usage
-**Notice:** you need run <kbd>mosdepth</kbd> with same window size for all your samples, and get sequence depth of all samples manually.  
+
+**Notice:** you need run <kbd>mosdepth</kbd> with same window size for all your samples, and get sequence depth of all
+samples manually.
+
 ```sh
 # For windows user, just run gpopCNV.exe, for other platform like linux and macOS,
 # use command below to run gpopCNV
 python3 gpopCNV.py
 ```
-The main form is like below:
-![](images/main_form.png)
